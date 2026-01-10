@@ -39,8 +39,7 @@ debug.log
 # Run folders
 run/
 runs/
-server/
-client/
+
 test/
 
 # Archives
