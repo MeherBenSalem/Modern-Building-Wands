@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " #X",
+        "#O#",
+        "X# "
+    ],
+    "key": {
+        "O": {
+            "tag": "c:feathers"
+        },
+        "X": {
+            "tag": "c:ingots/gold"
+        },
+        "#": {
+            "tag": "c:glass_panes"
+        }
+    },
+    "result": {
+        "id": "reconstructedwands:core_angel",
+        "count": 1
+    }
+}

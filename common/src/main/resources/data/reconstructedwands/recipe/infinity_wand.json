@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "  N",
+        " S ",
+        "S  "
+    ],
+    "key": {
+        "N": {
+            "item": "minecraft:nether_star"
+        },
+        "S": {
+            "item": "minecraft:stick"
+        }
+    },
+    "result": {
+        "id": "reconstructedwands:infinity_wand",
+        "count": 1
+    }
+}

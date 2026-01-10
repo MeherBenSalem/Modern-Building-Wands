@@ -1,0 +1,33 @@
+{
+    "schemaVersion": 1,
+    "id": "${mod_id}",
+    "version": "${version}",
+    "name": "${mod_name}",
+    "description": "${description}",
+    "authors": [
+        "${mod_author}"
+    ],
+    "contact": {
+        "homepage": "https://github.com/Theta-Dev/ConstructionWand",
+        "sources": "https://github.com/Theta-Dev/ConstructionWand"
+    },
+    "license": "${license}",
+    "icon": "logo.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "com.nigthbeam.reconstructedwands.REConstructedWandsFabric"
+        ],
+        "client": [
+            "com.nigthbeam.reconstructedwands.client.REConstructedWandsFabricClient"
+        ]
+    },
+    "mixins": [],
+    "depends": {
+        "fabricloader": ">=${fabric_loader_version}",
+        "fabric-api": "*",
+        "minecraft": "${minecraft_version}",
+        "java": ">=${java_version}"
+    },
+    "suggests": {}
+}

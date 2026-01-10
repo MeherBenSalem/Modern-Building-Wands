@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:item/handheld",
+    "textures": {
+        "layer0": "reconstructedwands:item/iron_wand"
+    }
+}
