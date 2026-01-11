@@ -20,7 +20,7 @@ import java.util.function.Supplier;
 @Mod(Constants.MOD_ID)
 public class REConstructedWandsNeoForge {
 
-        public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, Constants.MOD_ID);
+        public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Constants.MOD_ID);
         public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister
                         .create(Registries.CREATIVE_MODE_TAB, Constants.MOD_ID);
         public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister
@@ -39,7 +39,7 @@ public class REConstructedWandsNeoForge {
                                                         .translatable("creativetab.reconstructedwands.wands_tab"))
                                         .icon(() -> ModItems.INFINITY_WAND.get().getDefaultInstance())
                                         .displayItems((parameters, output) -> {
-                                                ModItems.getAllItems().forEach(item -> output.accept(item.get()));
+                                                ModItems.getAllItems().forEach(holder -> output.accept(holder.get()));
                                         }).build());
 
         public REConstructedWandsNeoForge(IEventBus modEventBus) {

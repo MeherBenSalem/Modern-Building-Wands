@@ -6,15 +6,9 @@
         "X# "
     ],
     "key": {
-        "O": {
-            "tag": "c:feathers"
-        },
-        "X": {
-            "tag": "c:ingots/gold"
-        },
-        "#": {
-            "tag": "c:glass_panes"
-        }
+        "O": "#c:feathers",
+        "X": "#c:ingots/gold",
+        "#": "#c:glass_panes"
     },
     "result": {
         "id": "reconstructedwands:core_angel",

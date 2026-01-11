@@ -5,7 +5,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
+import com.nigthbeam.reconstructedwands.platform.Services;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -56,19 +56,28 @@ public abstract class ItemWand extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+    public InteractionResult use(Level world, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 
-        if (!player.isCrouching()) {
+        if (player.isShiftKeyDown()) {
+            if (world.isClientSide) {
+                Services.PLATFORM.openWandGUI(player.getItemInHand(hand));
+            }
+            return InteractionResult.SUCCESS;
+        }
+
+        if (!player.isShiftKeyDown()) { // This condition replaces !player.isCrouching()
             if (world.isClientSide)
-                return InteractionResultHolder.fail(stack);
+                return InteractionResult.PASS; // Changed from InteractionResultHolder.fail(stack) to
+                                               // InteractionResult.PASS
 
             // Right click: Place angel block
             WandJob job = getWandJob(player, world, BlockHitResult.miss(player.getLookAngle(),
                     WandUtil.fromVector(player.getLookAngle()), player.blockPosition()), stack);
-            return job.doIt() ? InteractionResultHolder.success(stack) : InteractionResultHolder.fail(stack);
+            return job.doIt() ? InteractionResult.SUCCESS : InteractionResult.FAIL; // Changed from
+                                                                                    // InteractionResultHolder.success/fail(stack)
         }
-        return InteractionResultHolder.fail(stack);
+        return InteractionResult.PASS; // Changed from InteractionResultHolder.fail(stack) to InteractionResult.PASS
     }
 
     public static WandJob getWandJob(Player player, Level world, BlockHitResult rayTraceResult, ItemStack wand) {

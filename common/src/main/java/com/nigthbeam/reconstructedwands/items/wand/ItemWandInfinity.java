@@ -20,7 +20,6 @@ public class ItemWandInfinity extends ItemWand {
         return true;
     }
 
-    @Override
     public boolean isEnchantable(ItemStack stack) {
         return false;
     }

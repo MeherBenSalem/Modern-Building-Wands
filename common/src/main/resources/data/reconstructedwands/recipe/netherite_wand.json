@@ -6,12 +6,8 @@
         "S  "
     ],
     "key": {
-        "N": {
-            "item": "minecraft:netherite_ingot"
-        },
-        "S": {
-            "item": "minecraft:stick"
-        }
+        "N": "minecraft:netherite_ingot",
+        "S": "minecraft:stick"
     },
     "result": {
         "id": "reconstructedwands:netherite_wand",

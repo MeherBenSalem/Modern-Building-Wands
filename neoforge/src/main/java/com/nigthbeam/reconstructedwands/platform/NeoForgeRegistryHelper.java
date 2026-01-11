@@ -14,7 +14,7 @@ public class NeoForgeRegistryHelper implements IRegistryHelper {
     @Nullable
     @Override
     public Item getItem(ResourceLocation location) {
-        return BuiltInRegistries.ITEM.get(location);
+        return BuiltInRegistries.ITEM.get(location).map(net.minecraft.core.Holder::value).orElse(null);
     }
 
     @Nullable

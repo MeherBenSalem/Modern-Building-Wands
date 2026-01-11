@@ -13,7 +13,7 @@ import com.nigthbeam.reconstructedwands.items.wand.ItemWand;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.minecraft.client.KeyMapping;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import org.lwjgl.glfw.GLFW;
 
 /**
@@ -56,10 +56,10 @@ public class ClientEvents {
             ItemStack stack = player.getItemInHand(hand);
             if (world.isClientSide) {
                 if (handleWandRightClick(player, stack)) {
-                    return InteractionResultHolder.success(stack);
+                    return InteractionResult.SUCCESS;
                 }
             }
-            return InteractionResultHolder.pass(stack);
+            return InteractionResult.PASS;
         });
     }
 
@@ -91,5 +91,9 @@ public class ClientEvents {
 
         Minecraft.getInstance().setScreen(new ScreenWand(wand));
         return true;
+    }
+
+    public static void openWandGUI(ItemStack wand) {
+        Minecraft.getInstance().setScreen(new ScreenWand(wand));
     }
 }

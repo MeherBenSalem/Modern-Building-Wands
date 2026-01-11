@@ -22,4 +22,11 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
     public boolean isDevelopmentEnvironment() {
         return !FMLLoader.isProduction();
     }
+
+    @Override
+    public void openWandGUI(net.minecraft.world.item.ItemStack stack) {
+        if (FMLLoader.getDist().isClient()) {
+            com.nigthbeam.reconstructedwands.client.ClientEvents.openWandGUI(stack);
+        }
+    }
 }

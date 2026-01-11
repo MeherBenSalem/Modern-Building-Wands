@@ -5,7 +5,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
@@ -74,11 +73,53 @@ public class RenderBlockPreview {
 
         for (BlockPos block : blocks) {
             AABB aabb = new AABB(block).move(-d0, -d1, -d2);
-            LevelRenderer.renderLineBox(ms, lineBuilder, aabb, colorR, colorG, colorB, 0.4F);
+            renderLineBox(ms, lineBuilder, aabb, colorR, colorG, colorB, 0.4F);
         }
 
         // Return false to prevent the default block outline from rendering
         return false;
+    }
+
+    private static void renderLineBox(PoseStack poseStack, VertexConsumer consumer, AABB aabb, float red, float green,
+            float blue, float alpha) {
+        float x0 = (float) aabb.minX;
+        float y0 = (float) aabb.minY;
+        float z0 = (float) aabb.minZ;
+        float x1 = (float) aabb.maxX;
+        float y1 = (float) aabb.maxY;
+        float z1 = (float) aabb.maxZ;
+
+        PoseStack.Pose pose = poseStack.last();
+
+        // Bottom
+        consumer.addVertex(pose, x0, y0, z0).setColor(red, green, blue, alpha).setNormal(pose, 1.0F, 0.0F, 0.0F);
+        consumer.addVertex(pose, x1, y0, z0).setColor(red, green, blue, alpha).setNormal(pose, 1.0F, 0.0F, 0.0F);
+        consumer.addVertex(pose, x0, y0, z0).setColor(red, green, blue, alpha).setNormal(pose, 0.0F, 0.0F, 1.0F);
+        consumer.addVertex(pose, x0, y0, z1).setColor(red, green, blue, alpha).setNormal(pose, 0.0F, 0.0F, 1.0F);
+        consumer.addVertex(pose, x1, y0, z0).setColor(red, green, blue, alpha).setNormal(pose, 0.0F, 0.0F, 1.0F);
+        consumer.addVertex(pose, x1, y0, z1).setColor(red, green, blue, alpha).setNormal(pose, 0.0F, 0.0F, 1.0F);
+        consumer.addVertex(pose, x0, y0, z1).setColor(red, green, blue, alpha).setNormal(pose, 1.0F, 0.0F, 0.0F);
+        consumer.addVertex(pose, x1, y0, z1).setColor(red, green, blue, alpha).setNormal(pose, 1.0F, 0.0F, 0.0F);
+
+        // Top
+        consumer.addVertex(pose, x0, y1, z0).setColor(red, green, blue, alpha).setNormal(pose, 1.0F, 0.0F, 0.0F);
+        consumer.addVertex(pose, x1, y1, z0).setColor(red, green, blue, alpha).setNormal(pose, 1.0F, 0.0F, 0.0F);
+        consumer.addVertex(pose, x0, y1, z0).setColor(red, green, blue, alpha).setNormal(pose, 0.0F, 0.0F, 1.0F);
+        consumer.addVertex(pose, x0, y1, z1).setColor(red, green, blue, alpha).setNormal(pose, 0.0F, 0.0F, 1.0F);
+        consumer.addVertex(pose, x1, y1, z0).setColor(red, green, blue, alpha).setNormal(pose, 0.0F, 0.0F, 1.0F);
+        consumer.addVertex(pose, x1, y1, z1).setColor(red, green, blue, alpha).setNormal(pose, 0.0F, 0.0F, 1.0F);
+        consumer.addVertex(pose, x0, y1, z1).setColor(red, green, blue, alpha).setNormal(pose, 1.0F, 0.0F, 0.0F);
+        consumer.addVertex(pose, x1, y1, z1).setColor(red, green, blue, alpha).setNormal(pose, 1.0F, 0.0F, 0.0F);
+
+        // Sides
+        consumer.addVertex(pose, x0, y0, z0).setColor(red, green, blue, alpha).setNormal(pose, 0.0F, 1.0F, 0.0F);
+        consumer.addVertex(pose, x0, y1, z0).setColor(red, green, blue, alpha).setNormal(pose, 0.0F, 1.0F, 0.0F);
+        consumer.addVertex(pose, x1, y0, z0).setColor(red, green, blue, alpha).setNormal(pose, 0.0F, 1.0F, 0.0F);
+        consumer.addVertex(pose, x1, y1, z0).setColor(red, green, blue, alpha).setNormal(pose, 0.0F, 1.0F, 0.0F);
+        consumer.addVertex(pose, x0, y0, z1).setColor(red, green, blue, alpha).setNormal(pose, 0.0F, 1.0F, 0.0F);
+        consumer.addVertex(pose, x0, y1, z1).setColor(red, green, blue, alpha).setNormal(pose, 0.0F, 1.0F, 0.0F);
+        consumer.addVertex(pose, x1, y0, z1).setColor(red, green, blue, alpha).setNormal(pose, 0.0F, 1.0F, 0.0F);
+        consumer.addVertex(pose, x1, y1, z1).setColor(red, green, blue, alpha).setNormal(pose, 0.0F, 1.0F, 0.0F);
     }
 
     public static void reset() {

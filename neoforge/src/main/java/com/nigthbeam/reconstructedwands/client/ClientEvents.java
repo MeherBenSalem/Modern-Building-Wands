@@ -64,8 +64,7 @@ public class ClientEvents {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void MouseScrollEvent(InputEvent.MouseScrollingEvent event) {
         Player player = Minecraft.getInstance().player;
-        // double scroll = event.getScrollDeltaY();
-        double scroll = 0; // TODO: Fix scroll delta API
+        double scroll = event.getScrollDeltaY();
 
         if (player == null || !modeKeyCombDown(player) || scroll == 0)
             return;
@@ -78,6 +77,10 @@ public class ClientEvents {
         wandOptions.lock.next(scroll < 0);
         ModMessages.sendToServer(new PacketWandOption(wandOptions.lock, true));
         event.setCanceled(true);
+    }
+
+    public static void openWandGUI(ItemStack wand) {
+        Minecraft.getInstance().setScreen(new ScreenWand(wand));
     }
 
     // Sneak+(OPT)+Left click wand to change core

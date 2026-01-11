@@ -2,8 +2,8 @@ package com.nigthbeam.reconstructedwands.crafting;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.ToolMaterial;
+
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
@@ -84,14 +84,9 @@ public class RecipeWandUpgrade extends CustomRecipe {
         return newWand;
     }
 
-    @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return width * height >= 2;
-    }
-
     @NotNull
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<? extends CustomRecipe> getSerializer() {
         return ModRecipes.WAND_UPGRADE_SERIALIZER;
     }
 
@@ -100,7 +95,7 @@ public class RecipeWandUpgrade extends CustomRecipe {
      */
     private boolean isWandUpgradeable(ItemStack wand) {
         if (wand.getItem() instanceof ItemWandBasic basicWand) {
-            Tier tier = basicWand.getTier();
+            ToolMaterial tier = basicWand.getTier();
             String wandType = getWandTypeFromTier(tier);
             return Services.CONFIG.isWandUpgradeable(wandType);
         } else if (wand.getItem() instanceof ItemWand itemWand) {
@@ -110,14 +105,14 @@ public class RecipeWandUpgrade extends CustomRecipe {
         return false;
     }
 
-    private String getWandTypeFromTier(Tier tier) {
-        if (tier == Tiers.STONE)
+    private String getWandTypeFromTier(ToolMaterial tier) {
+        if (tier == ToolMaterial.STONE)
             return "stone";
-        if (tier == Tiers.IRON)
+        if (tier == ToolMaterial.IRON)
             return "iron";
-        if (tier == Tiers.DIAMOND)
+        if (tier == ToolMaterial.DIAMOND)
             return "diamond";
-        if (tier == Tiers.NETHERITE)
+        if (tier == ToolMaterial.NETHERITE)
             return "netherite";
         return "stone";
     }

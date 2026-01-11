@@ -6,12 +6,8 @@
         "I  "
     ],
     "key": {
-        "S": {
-            "item": "minecraft:stone"
-        },
-        "I": {
-            "item": "minecraft:stick"
-        }
+        "S": "minecraft:stone",
+        "I": "minecraft:stick"
     },
     "result": {
         "id": "reconstructedwands:stone_wand",

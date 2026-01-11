@@ -21,4 +21,11 @@ public class FabricPlatformHelper implements IPlatformHelper {
     public boolean isDevelopmentEnvironment() {
         return FabricLoader.getInstance().isDevelopmentEnvironment();
     }
+
+    @Override
+    public void openWandGUI(net.minecraft.world.item.ItemStack stack) {
+        if (FabricLoader.getInstance().getEnvironmentType() == net.fabricmc.api.EnvType.CLIENT) {
+            com.nigthbeam.reconstructedwands.client.ClientEvents.openWandGUI(stack);
+        }
+    }
 }

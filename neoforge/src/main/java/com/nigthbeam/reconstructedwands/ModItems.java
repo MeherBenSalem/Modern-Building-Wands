@@ -1,7 +1,8 @@
 package com.nigthbeam.reconstructedwands;
 
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.ToolMaterial;
+import net.neoforged.neoforge.registries.DeferredItem;
 import com.nigthbeam.reconstructedwands.items.core.ItemCoreAngel;
 import com.nigthbeam.reconstructedwands.items.core.ItemCoreDestruction;
 import com.nigthbeam.reconstructedwands.items.wand.ItemWandBasic;
@@ -9,45 +10,47 @@ import com.nigthbeam.reconstructedwands.items.wand.ItemWandInfinity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
+import java.util.function.Function;
 
 /**
- * NeoForge item registration using DeferredRegister.
+ * NeoForge item registration using DeferredRegister.Items.
+ * Uses DeferredItem which auto-handles item ID setting in 1.21.2+.
  */
 public class ModItems {
 
-        private static final List<Supplier<Item>> ALL_ITEMS = new ArrayList<>();
+        private static final List<DeferredItem<Item>> ALL_ITEMS = new ArrayList<>();
 
-        // Wands
-        public static final Supplier<Item> STONE_WAND = registerItem("stone_wand",
-                        () -> new ItemWandBasic(new Item.Properties(), Tiers.STONE));
-        public static final Supplier<Item> IRON_WAND = registerItem("iron_wand",
-                        () -> new ItemWandBasic(new Item.Properties(), Tiers.IRON));
-        public static final Supplier<Item> DIAMOND_WAND = registerItem("diamond_wand",
-                        () -> new ItemWandBasic(new Item.Properties(), Tiers.DIAMOND));
-        public static final Supplier<Item> NETHERITE_WAND = registerItem("netherite_wand",
-                        () -> new ItemWandBasic(new Item.Properties().fireResistant(), Tiers.NETHERITE));
-        public static final Supplier<Item> INFINITY_WAND = registerItem("infinity_wand",
-                        () -> new ItemWandInfinity(new Item.Properties().stacksTo(1)));
+        // Wands - use registerItem which provides Item.Properties with ID already set
+        public static final DeferredItem<Item> STONE_WAND = registerItem("stone_wand",
+                        props -> new ItemWandBasic(props, ToolMaterial.STONE));
+        public static final DeferredItem<Item> IRON_WAND = registerItem("iron_wand",
+                        props -> new ItemWandBasic(props, ToolMaterial.IRON));
+        public static final DeferredItem<Item> DIAMOND_WAND = registerItem("diamond_wand",
+                        props -> new ItemWandBasic(props, ToolMaterial.DIAMOND));
+        public static final DeferredItem<Item> NETHERITE_WAND = registerItem("netherite_wand",
+                        props -> new ItemWandBasic(props.fireResistant(), ToolMaterial.NETHERITE));
+        public static final DeferredItem<Item> INFINITY_WAND = registerItem("infinity_wand",
+                        props -> new ItemWandInfinity(props.stacksTo(1)));
 
         // Cores
-        public static final Supplier<Item> CORE_ANGEL = registerItem("core_angel",
-                        () -> new ItemCoreAngel(new Item.Properties().stacksTo(1)));
-        public static final Supplier<Item> CORE_DESTRUCTION = registerItem("core_destruction",
-                        () -> new ItemCoreDestruction(new Item.Properties().stacksTo(1)));
+        public static final DeferredItem<Item> CORE_ANGEL = registerItem("core_angel",
+                        props -> new ItemCoreAngel(props.stacksTo(1)));
+        public static final DeferredItem<Item> CORE_DESTRUCTION = registerItem("core_destruction",
+                        props -> new ItemCoreDestruction(props.stacksTo(1)));
 
-        private static Supplier<Item> registerItem(String name, Supplier<Item> item) {
-                Supplier<Item> registered = com.nigthbeam.reconstructedwands.REConstructedWandsNeoForge.ITEMS
-                                .register(name, item);
-                ALL_ITEMS.add(registered);
-                return registered;
+        private static DeferredItem<Item> registerItem(String name, Function<Item.Properties, Item> factory) {
+                // DeferredRegister.Items.registerItem provides Props with ID already set
+                DeferredItem<Item> item = com.nigthbeam.reconstructedwands.REConstructedWandsNeoForge.ITEMS
+                                .registerItem(name, factory);
+                ALL_ITEMS.add(item);
+                return item;
         }
 
         public static void register() {
                 // Called to trigger static initialization
         }
 
-        public static List<Supplier<Item>> getAllItems() {
+        public static List<DeferredItem<Item>> getAllItems() {
                 return ALL_ITEMS;
         }
 }

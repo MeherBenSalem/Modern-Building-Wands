@@ -1,17 +1,17 @@
 package com.nigthbeam.reconstructedwands.items.wand;
 
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ToolMaterial;
 import com.nigthbeam.reconstructedwands.platform.Services;
 
 /**
  * Basic wand with durability based on tier.
  */
 public class ItemWandBasic extends ItemWand {
-    private final Tier tier;
+    private final ToolMaterial tier;
 
-    public ItemWandBasic(Properties properties, Tier tier) {
-        super(properties.durability(tier.getUses()));
+    public ItemWandBasic(Properties properties, ToolMaterial tier) {
+        super(properties.durability(tier.durability()));
         this.tier = tier;
     }
 
@@ -25,7 +25,7 @@ public class ItemWandBasic extends ItemWand {
         return false;
     }
 
-    public Tier getTier() {
+    public ToolMaterial getTier() {
         return tier;
     }
 }

@@ -1,7 +1,7 @@
 package com.nigthbeam.reconstructedwands.crafting;
 
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
+import net.minecraft.world.item.crafting.CustomRecipe;
 
 /**
  * Holds references to custom recipe serializers.
@@ -21,7 +21,7 @@ public class ModRecipes {
     /**
      * Creates a new wand upgrade serializer instance.
      */
-    public static SimpleCraftingRecipeSerializer<RecipeWandUpgrade> createWandUpgradeSerializer() {
-        return new SimpleCraftingRecipeSerializer<>(RecipeWandUpgrade::new);
+    public static RecipeSerializer<RecipeWandUpgrade> createWandUpgradeSerializer() {
+        return new CustomRecipe.Serializer<>(RecipeWandUpgrade::new);
     }
 }

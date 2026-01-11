@@ -184,6 +184,6 @@ public class WandUtil {
     }
 
     public static Direction fromVector(Vec3 vector) {
-        return Direction.getNearest((float) vector.x, (float) vector.y, (float) vector.z);
+        return Direction.getApproximateNearest((float) vector.x, (float) vector.y, (float) vector.z);
     }
 }

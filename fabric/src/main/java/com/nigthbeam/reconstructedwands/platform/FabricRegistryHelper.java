@@ -14,7 +14,7 @@ public class FabricRegistryHelper implements IRegistryHelper {
     @Override
     @Nullable
     public Item getItem(ResourceLocation location) {
-        return BuiltInRegistries.ITEM.get(location);
+        return BuiltInRegistries.ITEM.get(location).map(net.minecraft.core.Holder::value).orElse(null);
     }
 
     @Override
