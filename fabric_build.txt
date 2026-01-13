@@ -1,0 +1,673 @@
+﻿To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.10/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :buildSrc:extractPluginRequests UP-TO-DATE
+> Task :buildSrc:generatePluginAdapters UP-TO-DATE
+> Task :buildSrc:compileJava UP-TO-DATE
+> Task :buildSrc:compileGroovy NO-SOURCE
+> Task :buildSrc:compileGroovyPlugins UP-TO-DATE
+> Task :buildSrc:pluginDescriptors UP-TO-DATE
+> Task :buildSrc:processResources UP-TO-DATE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:jar UP-TO-DATE
+
+> Configure project :fabric
+Fabric Loom: 1.8.13
+
+> Task :common:createMinecraftArtifacts
+Loaded 100 artifacts from E:\Minecraft\My Mods\Modern Building Wands\common\build\tmp\createMinecraftArtifacts\nfrt_artifact_manifest.properties
+[1m*** Started working on [4mdownloadJson[0m[0m
+ [1m[92mDONE [0m Completed [4mdownloadJson[0m in 0.02s
+[1m*** Started working on [4mdownloadClient[0m[0m
+[1m*** Started working on [4mdownloadClientMappings[0m[0m
+[1m*** Started working on [4mdownloadServer[0m[0m
+[1m*** Started working on [4mlistLibraries[0m[0m
+ [1m[92mREUSE[0m Used cache of [4mlistLibraries[0m in 0.00s
+ [1m[92mDONE [0m Completed [4mdownloadServer[0m in 0.03s
+ [1m[92mDONE [0m Completed [4mdownloadClientMappings[0m in 0.03s
+ [1m[92mDONE [0m Completed [4mdownloadClient[0m in 0.03s
+[1m*** Started working on [4mmergeMappings[0m[0m
+ [1m[92mREUSE[0m Used cache of [4mmergeMappings[0m in 0.00s
+[1m*** Started working on [4mstripClient[0m[0m
+ [1m[92mREUSE[0m Used cache of [4mstripClient[0m in 0.00s
+[1m*** Started working on [4mextractServer[0m[0m
+ [1m[92mREUSE[0m Used cache of [4mextractServer[0m in 0.00s
+[1m*** Started working on [4mstripServer[0m[0m
+ [1m[92mREUSE[0m Used cache of [4mstripServer[0m in 0.00s
+[1m*** Started working on [4mmerge[0m[0m
+ [1m[92mREUSE[0m Used cache of [4mmerge[0m in 0.00s
+[1m*** Started working on [4mrename[0m[0m
+ [1m[92mREUSE[0m Used cache of [4mrename[0m in 0.00s
+[1m*** Started working on [4mdecompile[0m[0m
+ [1m[92mREUSE[0m Used cache of [4mdecompile[0m in 0.00s
+[1m*** Started working on [4minject[0m[0m
+ [1m[92mREUSE[0m Used cache of [4minject[0m in 0.00s
+[1m*** Started working on [4mpatch[0m[0m
+ [1m[92mREUSE[0m Used cache of [4mpatch[0m in 0.00s
+[1m*** Started working on [4mtransformSources[0m[0m
+ [1m[92mREUSE[0m Used cache of [4mtransformSources[0m in 0.00s
+[1m*** Started working on [4mrecompile[0m[0m
+ [1m[92mREUSE[0m Used cache of [4mrecompile[0m in 0.00s
+[1m*** Started working on [4mmergeWithSources[0m[0m
+ [1m[92mREUSE[0m Used cache of [4mmergeWithSources[0m in 0.00s
+Total runtime: 0.76s
+
+
+> Task :common:compileJava UP-TO-DATE
+> Task :fabric:compileJava UP-TO-DATE
+> Task :fabric:processResources UP-TO-DATE
+> Task :fabric:classes UP-TO-DATE
+> Task :fabric:jar UP-TO-DATE
+
+> Task :fabric:javadoc
+./gradlew : E:\Minecraft\My Mods\Modern Building Wands\
+common\src\main\java\com\nigthbeam\reconstructedwands\b
+asics\option\IOption.java:8: warning: no @param for <T>
+At line:1 char:1
++ ./gradlew :fabric:build 2>&1 | Out-File -Encoding 
+utf8 fabric_build.t ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (E:\Minecr 
+   aft\My... @param for <T>:String) [], RemoteExcepti  
+  on
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+public interface IOption<T> {
+       ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\basics\option
+\OptionEnum.java:9: warning: no @param for <E>
+public class OptionEnum<E extends Enum<E>> implements 
+IOption<E> {
+       ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\basics\option
+\WandUpgrades.java:19: warning: no @param for <T>
+public class WandUpgrades<T extends IWandUpgrade> {
+       ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\basics\option
+\WandUpgradesSelectable.java:12: warning: no @param 
+for <T>
+public class WandUpgradesSelectable<T extends 
+IWandUpgrade> extends WandUpgrades<T> implements 
+IOption<T> {
+       ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\basics\pool\I
+Pool.java:8: warning: no @param for <T>
+public interface IPool<T> {
+       ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\basics\pool\O
+rderedPool.java:9: warning: no @param for <T>
+public class OrderedPool<T> implements IPool<T> {
+       ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\basics\pool\R
+andomPool.java:12: warning: no @param for <T>
+public class RandomPool<T> implements IPool<T> {
+       ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\wand\undo\Und
+oHistory.java:98: warning: no @param for positions
+    public record UndoBlocksData(Set<BlockPos> 
+positions) {
+           ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\api\IWandActi
+on.java:20: warning: no @param for wand
+    int getLimit(ItemStack wand);
+        ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\api\IWandActi
+on.java:20: warning: no @return
+    int getLimit(ItemStack wand);
+        ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\api\IWandActi
+on.java:26: warning: no @param for world
+    List<ISnapshot> getSnapshots(Level world, Player 
+player, BlockHitResult rayTraceResult,
+                    ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\api\IWandActi
+on.java:26: warning: no @param for player
+    List<ISnapshot> getSnapshots(Level world, Player 
+player, BlockHitResult rayTraceResult,
+                    ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\api\IWandActi
+on.java:26: warning: no @param for rayTraceResult
+    List<ISnapshot> getSnapshots(Level world, Player 
+player, BlockHitResult rayTraceResult,
+                    ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\api\IWandActi
+on.java:26: warning: no @param for wand
+    List<ISnapshot> getSnapshots(Level world, Player 
+player, BlockHitResult rayTraceResult,
+                    ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\api\IWandActi
+on.java:26: warning: no @param for options
+    List<ISnapshot> getSnapshots(Level world, Player 
+player, BlockHitResult rayTraceResult,
+                    ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\api\IWandActi
+on.java:26: warning: no @param for supplier
+    List<ISnapshot> getSnapshots(Level world, Player 
+player, BlockHitResult rayTraceResult,
+                    ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\api\IWandActi
+on.java:26: warning: no @param for limit
+    List<ISnapshot> getSnapshots(Level world, Player 
+player, BlockHitResult rayTraceResult,
+                    ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\api\IWandActi
+on.java:26: warning: no @return
+    List<ISnapshot> getSnapshots(Level world, Player 
+player, BlockHitResult rayTraceResult,
+                    ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\api\IWandActi
+on.java:33: warning: no @param for world
+    List<ISnapshot> getSnapshotsFromAir(Level world, 
+Player player, BlockHitResult rayTraceResult,
+                    ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\api\IWandActi
+on.java:33: warning: no @param for player
+    List<ISnapshot> getSnapshotsFromAir(Level world, 
+Player player, BlockHitResult rayTraceResult,
+                    ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\api\IWandActi
+on.java:33: warning: no @param for rayTraceResult
+    List<ISnapshot> getSnapshotsFromAir(Level world, 
+Player player, BlockHitResult rayTraceResult,
+                    ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\api\IWandActi
+on.java:33: warning: no @param for wand
+    List<ISnapshot> getSnapshotsFromAir(Level world, 
+Player player, BlockHitResult rayTraceResult,
+                    ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\api\IWandActi
+on.java:33: warning: no @param for options
+    List<ISnapshot> getSnapshotsFromAir(Level world, 
+Player player, BlockHitResult rayTraceResult,
+                    ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\api\IWandActi
+on.java:33: warning: no @param for supplier
+    List<ISnapshot> getSnapshotsFromAir(Level world, 
+Player player, BlockHitResult rayTraceResult,
+                    ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\api\IWandActi
+on.java:33: warning: no @param for limit
+    List<ISnapshot> getSnapshotsFromAir(Level world, 
+Player player, BlockHitResult rayTraceResult,
+                    ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\api\IWandActi
+on.java:33: warning: no @return
+    List<ISnapshot> getSnapshotsFromAir(Level world, 
+Player player, BlockHitResult rayTraceResult,
+                    ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\wand\action\A
+ctionAngel.java:26: warning: use of default 
+constructor, which does not provide a comment
+public class ActionAngel implements IWandAction {
+       ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\wand\action\A
+ctionAngel.java:77: warning: no comment
+    protected String getWandType(ItemStack wand) {
+                     ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\wand\action\A
+ctionConstruction.java:26: warning: use of default 
+constructor, which does not provide a comment
+public class ActionConstruction implements IWandAction 
+{
+       ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\wand\action\A
+ctionConstruction.java:146: warning: no comment
+    protected String getWandType(ItemStack wand) {
+                     ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\wand\action\A
+ctionDestruction.java:27: warning: use of default 
+constructor, which does not provide a comment
+public class ActionDestruction implements IWandAction {
+       ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\wand\action\A
+ctionDestruction.java:150: warning: no comment
+    protected String getWandType(ItemStack wand) {
+                     ^
+E:\Minecraft\My Mods\Modern Building Wands\fabric\src\m
+ain\java\com\nigthbeam\reconstructedwands\client\Client
+Events.java:86: warning: no @param for player
+    public static boolean handleWandRightClick(Player 
+player, ItemStack wand) {
+                          ^
+E:\Minecraft\My Mods\Modern Building Wands\fabric\src\m
+ain\java\com\nigthbeam\reconstructedwands\client\Client
+Events.java:86: warning: no @param for wand
+    public static boolean handleWandRightClick(Player 
+player, ItemStack wand) {
+                          ^
+E:\Minecraft\My Mods\Modern Building Wands\fabric\src\m
+ain\java\com\nigthbeam\reconstructedwands\client\Client
+Events.java:86: warning: no @return
+    public static boolean handleWandRightClick(Player 
+player, ItemStack wand) {
+                          ^
+E:\Minecraft\My Mods\Modern Building Wands\fabric\src\m
+ain\java\com\nigthbeam\reconstructedwands\client\Client
+Events.java:25: warning: no comment
+    public static final KeyMapping WAND_GUI_KEY = new 
+KeyMapping(
+                                   ^
+E:\Minecraft\My Mods\Modern Building Wands\fabric\src\m
+ain\java\com\nigthbeam\reconstructedwands\client\Client
+Events.java:22: warning: use of default constructor, 
+which does not provide a comment
+public class ClientEvents {
+       ^
+E:\Minecraft\My Mods\Modern Building Wands\fabric\src\m
+ain\java\com\nigthbeam\reconstructedwands\client\Client
+Events.java:78: warning: no comment
+    public static boolean guiKeyCombDown(Player 
+player) {
+                          ^
+E:\Minecraft\My Mods\Modern Building Wands\fabric\src\m
+ain\java\com\nigthbeam\reconstructedwands\client\Client
+Events.java:70: warning: no comment
+    public static boolean isOptKeyDown() {
+                          ^
+E:\Minecraft\My Mods\Modern Building Wands\fabric\src\m
+ain\java\com\nigthbeam\reconstructedwands\client\Client
+Events.java:74: warning: no comment
+    public static boolean modeKeyCombDown(Player 
+player) {
+                          ^
+E:\Minecraft\My Mods\Modern Building Wands\fabric\src\m
+ain\java\com\nigthbeam\reconstructedwands\client\Client
+Events.java:96: warning: no comment
+    public static void openWandGUI(ItemStack wand) {
+                       ^
+E:\Minecraft\My Mods\Modern Building Wands\fabric\src\m
+ain\java\com\nigthbeam\reconstructedwands\client\Client
+Events.java:31: warning: no comment
+    public static void register() {
+                       ^
+E:\Minecraft\My Mods\Modern Building Wands\fabric\src\m
+ain\java\com\nigthbeam\reconstructedwands\basics\Config
+Client.java:9: warning: no comment
+    public static class SimpleValue<T> {
+                  ^
+E:\Minecraft\My Mods\Modern Building Wands\fabric\src\m
+ain\java\com\nigthbeam\reconstructedwands\basics\Config
+Client.java:26: warning: no comment
+    public static final SimpleValue<Integer> OPT_KEY = 
+new SimpleValue<>(341);
+                                             ^
+E:\Minecraft\My Mods\Modern Building Wands\fabric\src\m
+ain\java\com\nigthbeam\reconstructedwands\basics\Config
+Client.java:32: warning: no comment
+    public static final SimpleValue<Boolean> 
+SHIFTOPT_GUI = new SimpleValue<>(true);
+                                             ^
+E:\Minecraft\My Mods\Modern Building Wands\fabric\src\m
+ain\java\com\nigthbeam\reconstructedwands\basics\Config
+Client.java:29: warning: no comment
+    public static final SimpleValue<Boolean> 
+SHIFTOPT_MODE = new SimpleValue<>(false);
+                                             ^
+E:\Minecraft\My Mods\Modern Building Wands\fabric\src\m
+ain\java\com\nigthbeam\reconstructedwands\basics\Config
+Client.java:7: warning: use of default constructor, 
+which does not provide a comment
+public class ConfigClient {
+       ^
+E:\Minecraft\My Mods\Modern Building Wands\fabric\src\m
+ain\java\com\nigthbeam\reconstructedwands\basics\Config
+Client.java:12: warning: no comment
+        public SimpleValue(T defaultValue) {
+               ^
+E:\Minecraft\My Mods\Modern Building Wands\fabric\src\m
+ain\java\com\nigthbeam\reconstructedwands\basics\Config
+Client.java:16: warning: no comment
+        public T get() {
+                 ^
+E:\Minecraft\My Mods\Modern Building Wands\fabric\src\m
+ain\java\com\nigthbeam\reconstructedwands\basics\Config
+Client.java:20: warning: no comment
+        public void set(T value) {
+                    ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\Constants.jav
+a:6: warning: no comment
+public class Constants {
+       ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\Constants.jav
+a:9: warning: no comment
+    public static final Logger LOG = 
+LoggerFactory.getLogger(MOD_NAME);
+                               ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\Constants.jav
+a:7: warning: no comment
+    public static final String MOD_ID = 
+"reconstructedwands";
+                               ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\Constants.jav
+a:8: warning: no comment
+    public static final String MOD_NAME = 
+"REConstructed Wands";
+                               ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\Constants.jav
+a:6: warning: use of default constructor, which does 
+not provide a comment
+public class Constants {
+       ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\containers\Co
+ntainerManager.java:15: warning: no comment
+    public ContainerManager() {
+           ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\containers\Co
+ntainerManager.java:23: warning: no comment
+    public int countItems(Player player, ItemStack 
+itemStack, ItemStack inventoryStack) {
+               ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\containers\Co
+ntainerManager.java:19: warning: no comment
+    public boolean register(IContainerHandler handler) 
+{
+                   ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\containers\Co
+ntainerManager.java:32: warning: no comment
+    public int useItems(Player player, ItemStack 
+itemStack, ItemStack inventoryStack, int count) {
+               ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\api\IWandCore
+.java:12: warning: no @return
+    ResourceLocation getRegistryName();
+                     ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\api\IWandCore
+.java:17: warning: no @return
+    IWandAction getWandAction();
+                ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\api\IWandCore
+.java:22: warning: no @return
+    int getColor();
+        ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\items\core\Co
+reDefault.java:13: warning: no comment
+    public static final CoreDefault INSTANCE = new 
+CoreDefault();
+                                    ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\items\core\Co
+reDefault.java:12: warning: use of default 
+constructor, which does not provide a comment
+public class CoreDefault implements IWandCore {
+       ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\wand\undo\Des
+troySnapshot.java:21: warning: no comment
+    public DestroySnapshot(BlockState block, BlockPos 
+pos) {
+           ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\wand\undo\ISn
+apshot.java:22: warning: no comment
+    boolean canRestore(Level world, Player player);
+            ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\wand\undo\ISn
+apshot.java:20: warning: no comment
+    boolean execute(Level world, Player player, 
+BlockHitResult rayTraceResult);
+            ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\wand\undo\ISn
+apshot.java:26: warning: no comment
+    void forceRestore(Level world);
+         ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\wand\undo\Des
+troySnapshot.java:27: warning: no comment
+    public static DestroySnapshot get(Level world, 
+Player player, BlockPos pos) {
+                                  ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\wand\undo\ISn
+apshot.java:16: warning: no comment
+    BlockState getBlockState();
+               ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\wand\undo\ISn
+apshot.java:14: warning: no comment
+    BlockPos getPos();
+             ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\wand\undo\ISn
+apshot.java:18: warning: no comment
+    ItemStack getRequiredItems();
+              ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\wand\undo\ISn
+apshot.java:24: warning: no comment
+    boolean restore(Level world, Player player);
+            ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\serv
+ices\IBlockEventHelper.java:19: warning: no @param for 
+world
+    boolean placeBlock(Level world, Player player, 
+BlockState block, BlockPos pos, @Nullable BlockItem 
+item);
+            ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\serv
+ices\IBlockEventHelper.java:19: warning: no @param for 
+player
+    boolean placeBlock(Level world, Player player, 
+BlockState block, BlockPos pos, @Nullable BlockItem 
+item);
+            ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\serv
+ices\IBlockEventHelper.java:19: warning: no @param for 
+block
+    boolean placeBlock(Level world, Player player, 
+BlockState block, BlockPos pos, @Nullable BlockItem 
+item);
+            ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\serv
+ices\IBlockEventHelper.java:19: warning: no @param for 
+pos
+    boolean placeBlock(Level world, Player player, 
+BlockState block, BlockPos pos, @Nullable BlockItem 
+item);
+            ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\serv
+ices\IBlockEventHelper.java:19: warning: no @param for 
+item
+    boolean placeBlock(Level world, Player player, 
+BlockState block, BlockPos pos, @Nullable BlockItem 
+item);
+            ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\serv
+ices\IBlockEventHelper.java:19: warning: no @return
+    boolean placeBlock(Level world, Player player, 
+BlockState block, BlockPos pos, @Nullable BlockItem 
+item);
+            ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\serv
+ices\IBlockEventHelper.java:25: warning: no @param for 
+world
+    boolean removeBlock(Level world, Player player, 
+@Nullable BlockState expectedBlock, BlockPos pos);
+            ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\serv
+ices\IBlockEventHelper.java:25: warning: no @param for 
+player
+    boolean removeBlock(Level world, Player player, 
+@Nullable BlockState expectedBlock, BlockPos pos);
+            ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\serv
+ices\IBlockEventHelper.java:25: warning: no @param for 
+expectedBlock
+    boolean removeBlock(Level world, Player player, 
+@Nullable BlockState expectedBlock, BlockPos pos);
+            ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\serv
+ices\IBlockEventHelper.java:25: warning: no @param for 
+pos
+    boolean removeBlock(Level world, Player player, 
+@Nullable BlockState expectedBlock, BlockPos pos);
+            ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\serv
+ices\IBlockEventHelper.java:25: warning: no @return
+    boolean removeBlock(Level world, Player player, 
+@Nullable BlockState expectedBlock, BlockPos pos);
+            ^
+E:\Minecraft\My Mods\Modern Building Wands\fabric\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\Fabr
+icBlockEventHelper.java:19: warning: use of default 
+constructor, which does not provide a comment
+public class FabricBlockEventHelper implements 
+IBlockEventHelper {
+       ^
+E:\Minecraft\My Mods\Modern Building Wands\fabric\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\Fabr
+icConfigHelper.java:9: warning: use of default 
+constructor, which does not provide a comment
+public class FabricConfigHelper implements 
+IConfigHelper {
+       ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\serv
+ices\IConfigHelper.java:19: warning: no comment
+    int getLimitCreative();
+        ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\serv
+ices\IConfigHelper.java:21: warning: no comment
+    int getMaxRange();
+        ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\serv
+ices\IConfigHelper.java:23: warning: no comment
+    int getUndoHistory();
+        ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\serv
+ices\IConfigHelper.java:12: warning: no comment
+    int getWandAngel(String wandType);
+        ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\serv
+ices\IConfigHelper.java:14: warning: no comment
+    int getWandDestruction(String wandType);
+        ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\serv
+ices\IConfigHelper.java:8: warning: no comment
+    int getWandDurability(String wandType);
+        ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\serv
+ices\IConfigHelper.java:10: warning: no comment
+    int getWandLimit(String wandType);
+        ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\serv
+ices\IConfigHelper.java:25: warning: no comment
+    boolean isAngelFalling();
+            ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\serv
+ices\IConfigHelper.java:16: warning: no comment
+    boolean isWandUpgradeable(String wandType);
+            ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\serv
+ices\INetworkHelper.java:12: warning: no @param for 
+packet
+    void sendToServer(Object packet);
+         ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\serv
+ices\INetworkHelper.java:17: warning: no @param for 
+packet
+    void sendToPlayer(Object packet, ServerPlayer 
+player);
+         ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\serv
+ices\INetworkHelper.java:17: warning: no @param for 
+player
+    void sendToPlayer(Object packet, ServerPlayer 
+player);
+         ^
+E:\Minecraft\My Mods\Modern Building Wands\fabric\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\Fabr
+icNetworkHelper.java:12: warning: use of default 
+constructor, which does not provide a comment
+public class FabricNetworkHelper implements 
+INetworkHelper {
+       ^
+E:\Minecraft\My Mods\Modern Building Wands\common\src\m
+ain\java\com\nigthbeam\reconstructedwands\platform\serv
+ices\IPlatformHelper.java:10: warning: no @return
+    String getPlatformName();
+           ^
+100 warnings
+
+> Task :fabric:javadocJar
+> Task :fabric:compileTestJava NO-SOURCE
+> Task :fabric:processIncludeJars
+> Task :fabric:sourcesJar
+> Task :fabric:processTestResources NO-SOURCE
+> Task :fabric:testClasses UP-TO-DATE
+> Task :fabric:test NO-SOURCE
+> Task :fabric:validateAccessWidener NO-SOURCE
+> Task :fabric:check UP-TO-DATE
+> Task :fabric:remapJar
+> Task :fabric:remapSourcesJar
+> Task :fabric:assemble
+> Task :fabric:build
+
+BUILD SUCCESSFUL in 21s
+18 actionable tasks: 7 executed, 11 up-to-date
