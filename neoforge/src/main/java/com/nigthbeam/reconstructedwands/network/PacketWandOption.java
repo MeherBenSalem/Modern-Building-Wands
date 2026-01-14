@@ -17,14 +17,15 @@ public class PacketWandOption implements CustomPacketPayload {
     public static final Type<PacketWandOption> TYPE = new Type<>(
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "wand_option"));
 
-    public static final StreamCodec<FriendlyByteBuf, PacketWandOption> STREAM_CODEC = StreamCodec.composite(
-            StreamCodec.of((b, v) -> b.writeUtf(v), FriendlyByteBuf::readUtf),
-            p -> p.key,
-            StreamCodec.of((b, v) -> b.writeUtf(v), FriendlyByteBuf::readUtf),
-            p -> p.value,
-            StreamCodec.of((b, v) -> b.writeBoolean(v), FriendlyByteBuf::readBoolean),
-            p -> p.notify,
-            PacketWandOption::new);
+    public static final StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf, PacketWandOption> STREAM_CODEC = StreamCodec
+            .composite(
+                    net.minecraft.network.codec.ByteBufCodecs.STRING_UTF8,
+                    p -> p.key,
+                    net.minecraft.network.codec.ByteBufCodecs.STRING_UTF8,
+                    p -> p.value,
+                    net.minecraft.network.codec.ByteBufCodecs.BOOL,
+                    p -> p.notify,
+                    PacketWandOption::new);
 
     public final String key;
     public final String value;

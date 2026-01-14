@@ -66,23 +66,34 @@ public class WandUtil {
     }
 
     public static List<ItemStack> getHotbar(Player player) {
-        return player.getInventory().items.subList(0, 9);
+        List<ItemStack> list = new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            list.add(player.getInventory().getItem(i));
+        }
+        return list;
     }
 
     public static List<ItemStack> getHotbarWithOffhand(Player player) {
-        ArrayList<ItemStack> inventory = new ArrayList<>(player.getInventory().items.subList(0, 9));
-        inventory.addAll(player.getInventory().offhand);
-        return inventory;
+        List<ItemStack> list = getHotbar(player);
+        list.add(player.getOffhandItem());
+        return list;
     }
 
     public static List<ItemStack> getMainInv(Player player) {
-        return player.getInventory().items.subList(9, player.getInventory().items.size());
+        List<ItemStack> list = new ArrayList<>();
+        for (int i = 9; i < 36; i++) {
+            list.add(player.getInventory().getItem(i));
+        }
+        return list;
     }
 
     public static List<ItemStack> getFullInv(Player player) {
-        ArrayList<ItemStack> inventory = new ArrayList<>(player.getInventory().offhand);
-        inventory.addAll(player.getInventory().items);
-        return inventory;
+        List<ItemStack> list = new ArrayList<>();
+        list.add(player.getOffhandItem());
+        for (int i = 0; i < 36; i++) {
+            list.add(player.getInventory().getItem(i));
+        }
+        return list;
     }
 
     public static int blockDistance(BlockPos p1, BlockPos p2) {
@@ -99,7 +110,7 @@ public class WandUtil {
     }
 
     public static int countItem(Player player, Item item) {
-        if (player.getInventory().items == null)
+        if (player.getInventory() == null)
             return 0;
         if (player.isCreative())
             return Integer.MAX_VALUE;

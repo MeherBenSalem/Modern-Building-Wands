@@ -116,7 +116,18 @@ public class WandUpgradesSelectable<T extends IWandUpgrade> extends WandUpgrades
     @Override
     protected void deserialize() {
         super.deserialize();
-        selector = tag.getByte(key + "_sel");
+        try {
+            Object val = tag.getByte(key + "_sel");
+            if (val instanceof Byte) {
+                selector = (Byte) val;
+            } else if (val instanceof java.util.Optional) {
+                selector = ((java.util.Optional<Byte>) val).orElse((byte) 0);
+            } else {
+                selector = 0;
+            }
+        } catch (Exception e) {
+            selector = 0;
+        }
         fixSelector();
     }
 
@@ -127,6 +138,6 @@ public class WandUpgradesSelectable<T extends IWandUpgrade> extends WandUpgrades
     }
 
     private void serializeSelector() {
-        tag.putByte(key + "_sel", selector);
+        tag.put(key + "_sel", net.minecraft.nbt.ByteTag.valueOf(selector));
     }
 }

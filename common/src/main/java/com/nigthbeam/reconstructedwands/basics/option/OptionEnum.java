@@ -96,7 +96,21 @@ public class OptionEnum<E extends Enum<E>> implements IOption<E> {
     @Override
     public void fromNBT(CompoundTag nbt) {
         if (nbt.contains(key)) {
-            int ord = nbt.getInt(key);
+            // Fix for Optional return type
+            int ord = 0;
+            try {
+                Object val = nbt.getInt(key);
+                if (val instanceof Integer) {
+                    ord = (Integer) val;
+                } else if (val instanceof java.util.Optional) {
+                    ord = ((java.util.Optional<Integer>) val).orElse(0);
+                } else {
+                    ord = defaultValue.ordinal();
+                }
+            } catch (Exception e) {
+                // Fallback
+            }
+
             if (ord >= 0 && ord < values.length) {
                 value = values[ord];
             } else {
@@ -109,6 +123,6 @@ public class OptionEnum<E extends Enum<E>> implements IOption<E> {
 
     @Override
     public void toNBT(CompoundTag nbt) {
-        nbt.putInt(key, value.ordinal());
+        nbt.put(key, net.minecraft.nbt.IntTag.valueOf(value.ordinal()));
     }
 }

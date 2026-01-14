@@ -109,10 +109,9 @@ public class SupplierInventory implements IWandSupplier {
         int count = stack.getCount();
         Item item = stack.getItem();
 
-        if (player.getInventory().items == null)
-            return count;
-        if (player.isCreative())
+        if (player.isCreative()) {
             return 0;
+        }
 
         List<ItemStack> hotbar = WandUtil.getHotbarWithOffhand(player);
         List<ItemStack> mainInv = WandUtil.getMainInv(player);

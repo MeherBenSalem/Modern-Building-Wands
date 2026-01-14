@@ -36,8 +36,16 @@ neoForge {
     }
 }
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
+sourceSets.main.resources { 
+    srcDir 'src/generated/resources'
+    srcDir project(':common').file('src/main/resources')
+}
 
 processResources {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from(rootProject.file("logo.png"))
+}
+
+tasks.named('sourcesJar').configure {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }

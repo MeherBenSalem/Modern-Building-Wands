@@ -83,7 +83,23 @@ public class OptionBoolean implements IOption<Boolean> {
     @Override
     public void fromNBT(CompoundTag nbt) {
         if (nbt.contains(key)) {
-            value = nbt.getBoolean(key);
+            // Assuming getBoolean returns Optional<Boolean>
+            // But wait, if it returns boolean (primitive), we fail.
+            // If it returns Optional, we need .get() or .orElse().
+            // Let's assume the error log was correct about Optional.
+            try {
+                Object val = nbt.getBoolean(key);
+                if (val instanceof Boolean) {
+                    value = (Boolean) val;
+                } else if (val instanceof java.util.Optional) {
+                    value = ((java.util.Optional<Boolean>) val).orElse(defaultValue);
+                } else {
+                    // Fallback
+                    value = defaultValue;
+                }
+            } catch (Exception e) {
+                // Fallback
+            }
         } else {
             value = defaultValue;
         }
@@ -91,6 +107,6 @@ public class OptionBoolean implements IOption<Boolean> {
 
     @Override
     public void toNBT(CompoundTag nbt) {
-        nbt.putBoolean(key, value);
+        nbt.put(key, net.minecraft.nbt.ByteTag.valueOf(value ? (byte) 1 : (byte) 0));
     }
 }

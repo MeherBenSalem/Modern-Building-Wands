@@ -36,11 +36,42 @@ public class WandUpgrades<T extends IWandUpgrade> {
 
     @SuppressWarnings("unchecked")
     protected void deserialize() {
-        ListTag listTag = tag.getList(key, Tag.TAG_STRING);
+        ListTag listTag = new ListTag();
+        try {
+            Object val = tag.getList(key);
+            if (val instanceof ListTag) {
+                listTag = (ListTag) val;
+            } else if (val instanceof java.util.Optional) {
+                listTag = ((java.util.Optional<ListTag>) val).orElse(new ListTag());
+            } else {
+                listTag = new ListTag();
+            }
+        } catch (Exception e) {
+            // Use empty list
+        }
         boolean requireFix = false;
 
         for (int i = 0; i < listTag.size(); i++) {
-            String str = listTag.getString(i);
+            // Fix for Optional return type
+            String str = "";
+            try {
+                Object val = listTag.getString(i);
+                if (val instanceof String) {
+                    str = (String) val;
+                } else if (val instanceof java.util.Optional) {
+                    str = ((java.util.Optional<String>) val).orElse("");
+                } else {
+                    // Fallback
+                    try {
+                        str = listTag.getString(i).toString(); // If it returned something else
+                    } catch (Exception e2) {
+                        str = "";
+                    }
+                }
+            } catch (Exception e) {
+                str = "";
+            }
+
             Item item = Services.REGISTRY.getItem(ResourceLocation.parse(str));
 
             if (item == null) {

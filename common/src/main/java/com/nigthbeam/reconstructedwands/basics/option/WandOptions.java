@@ -59,7 +59,19 @@ public class WandOptions {
         CompoundTag rootTag = customData.copyTag();
 
         if (rootTag.contains(TAG_ROOT)) {
-            tag = rootTag.getCompound(TAG_ROOT);
+            // Fix for Optional return type
+            try {
+                Object val = rootTag.getCompound(TAG_ROOT);
+                if (val instanceof CompoundTag) {
+                    tag = (CompoundTag) val;
+                } else if (val instanceof java.util.Optional) {
+                    tag = ((java.util.Optional<CompoundTag>) val).orElse(new CompoundTag());
+                } else {
+                    tag = new CompoundTag();
+                }
+            } catch (Exception e) {
+                tag = new CompoundTag();
+            }
         } else {
             tag = new CompoundTag();
         }

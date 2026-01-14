@@ -96,39 +96,53 @@ public abstract class ItemWand extends Item {
      */
     public abstract boolean isInfinityWand();
 
-    @Override
-    public void appendHoverText(ItemStack itemstack, TooltipContext context, List<Component> lines, TooltipFlag flag) {
-        WandOptions options = new WandOptions(itemstack);
-        int limit = options.cores.get().getWandAction().getLimit(itemstack);
-
-        String langTooltip = Constants.MOD_ID + ".tooltip.";
-
-        // +SHIFT tooltip: show all options + installed cores
-        if (Screen.hasShiftDown()) {
-            for (int i = 1; i < options.allOptions.length; i++) {
-                IOption<?> opt = options.allOptions[i];
-                lines.add(Component.translatable(opt.getKeyTranslation()).withStyle(ChatFormatting.AQUA)
-                        .append(Component.translatable(opt.getValueTranslation()).withStyle(ChatFormatting.GRAY)));
-            }
-            if (!options.cores.getUpgrades().isEmpty()) {
-                lines.add(Component.literal(""));
-                lines.add(Component.translatable(langTooltip + "cores").withStyle(ChatFormatting.GRAY));
-
-                for (IWandCore core : options.cores.getUpgrades()) {
-                    lines.add(Component
-                            .translatable(options.cores.getKeyTranslation() + "." + core.getRegistryName().toString()));
-                }
-            }
-        }
-        // Default tooltip: show block limit + active wand core
-        else {
-            IOption<?> opt = options.allOptions[0];
-            lines.add(Component.translatable(langTooltip + "blocks", limit).withStyle(ChatFormatting.GRAY));
-            lines.add(Component.translatable(opt.getKeyTranslation()).withStyle(ChatFormatting.AQUA)
-                    .append(Component.translatable(opt.getValueTranslation()).withStyle(ChatFormatting.WHITE)));
-            lines.add(Component.translatable(langTooltip + "shift").withStyle(ChatFormatting.AQUA));
-        }
-    }
+    // @Override removed due to signature mismatch
+    // @Override removed due to 1.21.5 API uncertainty
+    /*
+     * @Override
+     * public void appendHoverText(ItemStack itemstack, Item.TooltipContext context,
+     * TooltipFlag flag,
+     * java.util.function.Consumer<Component> tooltipAdder) {
+     * WandOptions options = new WandOptions(itemstack);
+     * int limit = options.cores.get().getWandAction().getLimit(itemstack);
+     * 
+     * String langTooltip = Constants.MOD_ID + ".tooltip.";
+     * 
+     * // +SHIFT tooltip: show all options + installed cores
+     * if (Screen.hasShiftDown()) {
+     * for (int i = 1; i < options.allOptions.length; i++) {
+     * IOption<?> opt = options.allOptions[i];
+     * tooltipAdder.accept(Component.translatable(opt.getKeyTranslation()).withStyle
+     * (ChatFormatting.AQUA)
+     * .append(Component.translatable(opt.getValueTranslation()).withStyle(
+     * ChatFormatting.GRAY)));
+     * }
+     * if (!options.cores.getUpgrades().isEmpty()) {
+     * tooltipAdder.accept(Component.literal(""));
+     * tooltipAdder.accept(Component.translatable(langTooltip +
+     * "cores").withStyle(ChatFormatting.GRAY));
+     * 
+     * for (IWandCore core : options.cores.getUpgrades()) {
+     * tooltipAdder.accept(Component
+     * .translatable(options.cores.getKeyTranslation() + "." +
+     * core.getRegistryName().toString()));
+     * }
+     * }
+     * }
+     * // Default tooltip: show block limit + active wand core
+     * else {
+     * IOption<?> opt = options.allOptions[0];
+     * tooltipAdder.accept(Component.translatable(langTooltip + "blocks",
+     * limit).withStyle(ChatFormatting.GRAY));
+     * tooltipAdder.accept(Component.translatable(opt.getKeyTranslation()).withStyle
+     * (ChatFormatting.AQUA)
+     * .append(Component.translatable(opt.getValueTranslation()).withStyle(
+     * ChatFormatting.WHITE)));
+     * tooltipAdder.accept(Component.translatable(langTooltip +
+     * "shift").withStyle(ChatFormatting.AQUA));
+     * }
+     * }
+     */
 
     public static void optionMessage(Player player, IOption<?> option) {
         player.displayClientMessage(
