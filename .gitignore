@@ -48,6 +48,10 @@ test/
 *.zip
 *.tar
 *.tar.gz
+
+# Final release artifacts
+!releases/
+!releases/*.jar
 # Keep the wrapper
 !gradle/wrapper/gradle-wrapper.jar
 
