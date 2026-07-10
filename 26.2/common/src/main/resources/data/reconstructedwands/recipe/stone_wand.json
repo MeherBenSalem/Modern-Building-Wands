@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "  S",
+        " I ",
+        "I  "
+    ],
+    "key": {
+        "S": "minecraft:stone",
+        "I": "minecraft:stick"
+    },
+    "result": {
+        "id": "reconstructedwands:stone_wand",
+        "count": 1
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "  D",
+        " S ",
+        "S  "
+    ],
+    "key": {
+        "D": "minecraft:diamond",
+        "S": "minecraft:stick"
+    },
+    "result": {
+        "id": "reconstructedwands:diamond_wand",
+        "count": 1
+    }
+}
