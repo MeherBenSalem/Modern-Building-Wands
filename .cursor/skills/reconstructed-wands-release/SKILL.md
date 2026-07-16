@@ -68,6 +68,12 @@ Preferred — run the release script from repo root:
 .cursor/skills/reconstructed-wands-release/scripts/release.ps1 -Version X.Y.Z
 ```
 
+From anywhere, pass the repo path:
+
+```powershell
+~/.cursor/skills/reconstructed-wands-release/scripts/release.ps1 -Version X.Y.Z -RepoRoot "C:\path\to\Modern-Building-Wands"
+```
+
 Manual build per workspace:
 
 ```powershell

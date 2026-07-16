@@ -1,11 +1,20 @@
 # Collect runtime jars for a version into releases/
 param(
     [Parameter(Mandatory = $true)]
-    [string]$Version
+    [string]$Version,
+    [string]$RepoRoot = ""
 )
 
 $ErrorActionPreference = "Stop"
-$root = Resolve-Path (Join-Path $PSScriptRoot "..\..\..\..")
+if ([string]::IsNullOrWhiteSpace($RepoRoot)) {
+    $candidate = Resolve-Path (Join-Path $PSScriptRoot "..\..\..\..") -ErrorAction SilentlyContinue
+    if ($candidate -and (Test-Path (Join-Path $candidate "1.20.1\gradle.properties"))) {
+        $RepoRoot = $candidate.Path
+    } else {
+        $RepoRoot = (Get-Location).Path
+    }
+}
+$root = Resolve-Path $RepoRoot
 Set-Location $root
 
 $dest = Join-Path $root "releases"
