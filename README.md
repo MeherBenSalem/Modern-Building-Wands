@@ -17,7 +17,7 @@ cd 1.20.1
 .\gradlew.bat build
 ```
 
-Use the matching JDK listed above. The consolidated `releases/` folder contains the final `1.1.0` runtime jars for all six loader targets.
+Use the matching JDK listed above. The consolidated `releases/` folder contains the final `1.1.1` runtime jars for all six loader targets.
 
 ## License
 

@@ -98,20 +98,20 @@ public class RecipeWandUpgrade extends CustomRecipe {
             return Services.CONFIG.isWandUpgradeable(wandType);
         } else if (wand.getItem() instanceof ItemWand itemWand) {
             // Infinity wand - always upgradeable
-            return itemWand.isInfinityWand() || Services.CONFIG.isWandUpgradeable("infinity");
+            return itemWand.isInfinityWand() || Services.CONFIG.isWandUpgradeable("infinity_wand");
         }
         return false;
     }
 
     private String getWandTypeFromTier(ToolMaterial tier) {
         if (tier == ToolMaterial.STONE)
-            return "stone";
+            return "stone_wand";
         if (tier == ToolMaterial.IRON)
-            return "iron";
+            return "iron_wand";
         if (tier == ToolMaterial.DIAMOND)
-            return "diamond";
+            return "diamond_wand";
         if (tier == ToolMaterial.NETHERITE)
-            return "netherite";
-        return "stone";
+            return "netherite_wand";
+        return "stone_wand";
     }
 }

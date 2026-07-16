@@ -7,74 +7,84 @@ import com.nigthbeam.reconstructedwands.platform.services.IConfigHelper;
  * Uses simple defaults for now - can be extended with a proper config library.
  */
 public class FabricConfigHelper implements IConfigHelper {
-    // Default wand limits by tier
+
     private static final int STONE_LIMIT = 27;
     private static final int IRON_LIMIT = 128;
     private static final int DIAMOND_LIMIT = 1024;
     private static final int NETHERITE_LIMIT = 2048;
     private static final int INFINITY_LIMIT = 2048;
 
-    // Angel limits (max depth)
-    private static final int STONE_ANGEL = 0;
+    private static final int STONE_ANGEL = 2;
     private static final int IRON_ANGEL = 4;
     private static final int DIAMOND_ANGEL = 16;
     private static final int NETHERITE_ANGEL = 32;
     private static final int INFINITY_ANGEL = 64;
 
-    // Destruction limits
-    private static final int STONE_DESTRUCTION = 0;
+    private static final int STONE_DESTRUCTION = 4;
     private static final int IRON_DESTRUCTION = 9;
     private static final int DIAMOND_DESTRUCTION = 81;
     private static final int NETHERITE_DESTRUCTION = 128;
     private static final int INFINITY_DESTRUCTION = 128;
 
+    private static boolean isStone(String wandType) {
+        return "stone".equals(wandType) || "stone_wand".equals(wandType);
+    }
+
+    private static boolean isIron(String wandType) {
+        return "iron".equals(wandType) || "iron_wand".equals(wandType);
+    }
+
+    private static boolean isDiamond(String wandType) {
+        return "diamond".equals(wandType) || "diamond_wand".equals(wandType);
+    }
+
+    private static boolean isNetherite(String wandType) {
+        return "netherite".equals(wandType) || "netherite_wand".equals(wandType);
+    }
+
+    private static boolean isInfinity(String wandType) {
+        return "infinity".equals(wandType) || "infinity_wand".equals(wandType);
+    }
+
     @Override
     public int getWandDurability(String wandType) {
-        return switch (wandType) {
-            case "stone_wand" -> 131;
-            case "iron_wand" -> 250;
-            case "diamond_wand" -> 1561;
-            case "netherite_wand" -> 2031;
-            default -> Integer.MAX_VALUE;
-        };
+        if (isStone(wandType)) return 131;
+        if (isIron(wandType)) return 250;
+        if (isDiamond(wandType)) return 1561;
+        if (isNetherite(wandType)) return 2031;
+        return Integer.MAX_VALUE;
     }
 
     @Override
     public int getWandLimit(String wandType) {
-        return switch (wandType) {
-            case "stone_wand" -> STONE_LIMIT;
-            case "iron_wand" -> IRON_LIMIT;
-            case "diamond_wand" -> DIAMOND_LIMIT;
-            case "netherite_wand" -> NETHERITE_LIMIT;
-            default -> INFINITY_LIMIT;
-        };
+        if (isStone(wandType)) return STONE_LIMIT;
+        if (isIron(wandType)) return IRON_LIMIT;
+        if (isDiamond(wandType)) return DIAMOND_LIMIT;
+        if (isNetherite(wandType)) return NETHERITE_LIMIT;
+        return INFINITY_LIMIT;
     }
 
     @Override
     public int getWandAngel(String wandType) {
-        return switch (wandType) {
-            case "stone_wand" -> STONE_ANGEL;
-            case "iron_wand" -> IRON_ANGEL;
-            case "diamond_wand" -> DIAMOND_ANGEL;
-            case "netherite_wand" -> NETHERITE_ANGEL;
-            default -> INFINITY_ANGEL;
-        };
+        if (isStone(wandType)) return STONE_ANGEL;
+        if (isIron(wandType)) return IRON_ANGEL;
+        if (isDiamond(wandType)) return DIAMOND_ANGEL;
+        if (isNetherite(wandType)) return NETHERITE_ANGEL;
+        return INFINITY_ANGEL;
     }
 
     @Override
     public int getWandDestruction(String wandType) {
-        return switch (wandType) {
-            case "stone_wand" -> STONE_DESTRUCTION;
-            case "iron_wand" -> IRON_DESTRUCTION;
-            case "diamond_wand" -> DIAMOND_DESTRUCTION;
-            case "netherite_wand" -> NETHERITE_DESTRUCTION;
-            default -> INFINITY_DESTRUCTION;
-        };
+        if (isStone(wandType)) return STONE_DESTRUCTION;
+        if (isIron(wandType)) return IRON_DESTRUCTION;
+        if (isDiamond(wandType)) return DIAMOND_DESTRUCTION;
+        if (isNetherite(wandType)) return NETHERITE_DESTRUCTION;
+        return INFINITY_DESTRUCTION;
     }
 
     @Override
     public boolean isWandUpgradeable(String wandType) {
-        return !wandType.equals("stone_wand");
+        return !isStone(wandType);
     }
 
     @Override
@@ -84,7 +94,7 @@ public class FabricConfigHelper implements IConfigHelper {
 
     @Override
     public int getMaxRange() {
-        return 100;
+        return 256;
     }
 
     @Override

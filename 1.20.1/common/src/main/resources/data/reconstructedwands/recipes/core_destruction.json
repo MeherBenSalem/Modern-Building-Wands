@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " #X",
+        "#O#",
+        "X# "
+    ],
+    "key": {
+        "O": {
+            "item": "minecraft:diamond_block"
+        },
+        "X": {
+            "item": "minecraft:diamond_pickaxe"
+        },
+        "#": {
+            "item": "minecraft:glass_pane"
+        }
+    },
+    "result": {
+        "item": "reconstructedwands:core_destruction",
+        "count": 1
+    }
+}
