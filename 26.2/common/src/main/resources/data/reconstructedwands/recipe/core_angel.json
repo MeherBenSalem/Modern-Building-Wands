@@ -6,9 +6,9 @@
         "X# "
     ],
     "key": {
-        "O": "#c:feathers",
-        "X": "#c:ingots/gold",
-        "#": "#c:glass_panes"
+        "O": "minecraft:feather",
+        "X": "minecraft:gold_ingot",
+        "#": "minecraft:glass_pane"
     },
     "result": {
         "id": "reconstructedwands:core_angel",

@@ -6,7 +6,7 @@
         "I  "
     ],
     "key": {
-        "S": "minecraft:stone",
+        "S": "#minecraft:stone_crafting_materials",
         "I": "minecraft:stick"
     },
     "result": {
