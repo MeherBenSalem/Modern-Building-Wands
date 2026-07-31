@@ -28,6 +28,10 @@ on:
         description: Skip uploads if true
         required: false
         default: "false"
+      platforms:
+        description: "modrinth, curseforge, or both"
+        required: false
+        default: "both"
 
 jobs:
   publish:
@@ -146,6 +150,7 @@ jobs:
           VERSION: ${{ steps.ver.outputs.version }}
           JAR_LIST: ${{ steps.jars.outputs.list }}
           CHANGELOG_FILE: REConstructed-Wands-${{ steps.ver.outputs.version }}-PatchNotes.md
+          PLATFORMS: ${{ inputs.platforms || 'both' }}
         shell: bash
         run: |
           set -euo pipefail
@@ -154,12 +159,18 @@ jobs:
           const fs = require('fs');
           const path = require('path');
           const version = process.env.VERSION;
+          const platforms = (process.env.PLATFORMS || 'both').toLowerCase();
+          const doModrinth = platforms === 'both' || platforms === 'modrinth';
+          const doCurse = platforms === 'both' || platforms === 'curseforge';
           const jars = process.env.JAR_LIST.split(/\n/).map(s => s.trim()).filter(Boolean);
           if (!jars.length) throw new Error('No jars to upload');
           let changelog = `Release ${version}`;
           if (process.env.CHANGELOG_FILE && fs.existsSync(process.env.CHANGELOG_FILE)) {
             changelog = fs.readFileSync(process.env.CHANGELOG_FILE, 'utf8');
           }
+
+          // Stable CurseForge loader version IDs (Upload API Game Versions docs)
+          const LOADER_IDS = { fabric: 7499, forge: 7498, neoforge: 10150, quilt: 9153 };
 
           function detect(jar) {
             const n = path.basename(jar).toLowerCase();
@@ -175,59 +186,107 @@ jobs:
             return { loader, gv };
           }
 
+          function flattenVersions(payload) {
+            const flat = [];
+            const data = payload?.data ?? payload;
+            if (!Array.isArray(data)) return flat;
+            for (const entry of data) {
+              if (Array.isArray(entry?.versions)) {
+                for (const v of entry.versions) flat.push(v);
+              } else if (entry && (entry.id != null) && entry.name) {
+                flat.push(entry);
+              }
+            }
+            return flat;
+          }
+
+          function findVersionId(flat, name) {
+            const exact = flat.find((v) => v.name === name || v.slug === name);
+            if (exact) return exact.id;
+            const loose = flat.find((v) => String(v.name).toLowerCase() === String(name).toLowerCase());
+            return loose?.id;
+          }
+
           (async () => {
-            // One Modrinth version per loader+game-version jar (matches prior Modrinth listing style)
-            for (const jar of jars) {
-              const { loader, gv } = detect(jar);
-              const gameVersions = gv ? [gv] : ['1.21.1'];
-              const body = {
-                name: `${version} ${loader} ${gameVersions[0]}`,
-                version_number: `${version}+${loader}-${gameVersions[0]}`,
-                changelog,
-                dependencies: [],
-                game_versions: gameVersions,
-                version_type: 'release',
-                loaders: [loader],
-                featured: false,
-                status: 'listed',
-                project_id: process.env.MODRINTH_ID,
-                file_parts: ['file_0'],
-                primary_file: 'file_0',
-              };
-              const form = new FormData();
-              form.append('data', JSON.stringify(body));
-              form.append('file_0', new Blob([fs.readFileSync(jar)]), path.basename(jar));
-              const mrRes = await fetch('https://api.modrinth.com/v2/version', {
-                method: 'POST',
-                headers: { Authorization: process.env.MODRINTH_TOKEN },
-                body: form,
-              });
-              const mrText = await mrRes.text();
-              if (!mrRes.ok) throw new Error('Modrinth ' + mrRes.status + ' ' + mrText.slice(0, 500));
-              console.log('Modrinth OK', path.basename(jar), mrText.slice(0, 180));
+            if (doModrinth) {
+              for (const jar of jars) {
+                const { loader, gv } = detect(jar);
+                const gameVersions = gv ? [gv] : ['1.21.1'];
+                const body = {
+                  name: `${version} ${loader} ${gameVersions[0]}`,
+                  version_number: `${version}+${loader}-${gameVersions[0]}`,
+                  changelog,
+                  dependencies: [],
+                  game_versions: gameVersions,
+                  version_type: 'release',
+                  loaders: [loader],
+                  featured: false,
+                  status: 'listed',
+                  project_id: process.env.MODRINTH_ID,
+                  file_parts: ['file_0'],
+                  primary_file: 'file_0',
+                };
+                const form = new FormData();
+                form.append('data', JSON.stringify(body));
+                form.append('file_0', new Blob([fs.readFileSync(jar)]), path.basename(jar));
+                const mrRes = await fetch('https://api.modrinth.com/v2/version', {
+                  method: 'POST',
+                  headers: { Authorization: process.env.MODRINTH_TOKEN },
+                  body: form,
+                });
+                const mrText = await mrRes.text();
+                if (!mrRes.ok) throw new Error('Modrinth ' + mrRes.status + ' ' + mrText.slice(0, 500));
+                console.log('Modrinth OK', path.basename(jar), mrText.slice(0, 180));
+              }
+            } else {
+              console.log('Skipping Modrinth (platforms=' + platforms + ')');
             }
 
-            const gvRes = await fetch('https://api.curseforge.com/v1/games/432/versions', {
-              headers: { 'x-api-key': process.env.CURSEFORGE_API_KEY },
-            });
-            const gvJson = await gvRes.json();
-            const flat = [];
-            for (const g of gvJson.data || []) for (const v of g.versions || []) flat.push(v);
+            if (!doCurse) {
+              console.log('Skipping CurseForge (platforms=' + platforms + ')');
+              return;
+            }
 
+            // Prefer Upload API game/versions (matches upload token), fallback to CF Core API
+            let flat = [];
+            const uploadGv = await fetch('https://minecraft.curseforge.com/api/game/versions', {
+              headers: { 'X-Api-Token': process.env.CURSEFORGE_TOKEN },
+            });
+            if (uploadGv.ok) {
+              flat = flattenVersions(await uploadGv.json());
+              console.log('CurseForge versions via upload API:', flat.length);
+            } else {
+              console.warn('Upload game/versions failed', uploadGv.status, (await uploadGv.text()).slice(0, 200));
+            }
+            if (!flat.length) {
+              const gvRes = await fetch('https://api.curseforge.com/v1/games/432/versions', {
+                headers: { 'x-api-key': process.env.CURSEFORGE_API_KEY },
+              });
+              const gvText = await gvRes.text();
+              if (!gvRes.ok) throw new Error('CurseForge versions ' + gvRes.status + ' ' + gvText.slice(0, 300));
+              flat = flattenVersions(JSON.parse(gvText));
+              console.log('CurseForge versions via core API:', flat.length);
+            }
+            if (!flat.length) throw new Error('No CurseForge game versions resolved');
+
+            let uploaded = 0;
             for (const jar of jars) {
-              const { gv } = detect(jar);
+              const { loader, gv } = detect(jar);
               const want = gv || '1.21.1';
-              const hit = flat.find((v) => v.name === want);
-              if (!hit) {
-                console.warn('Skipping CurseForge for', path.basename(jar), '- no game version', want);
-                continue;
+              const mcId = findVersionId(flat, want);
+              const loaderId = LOADER_IDS[loader];
+              if (mcId == null) {
+                throw new Error('No CurseForge game version id for ' + want + ' (' + path.basename(jar) + ')');
+              }
+              if (loaderId == null) {
+                throw new Error('No CurseForge loader id for ' + loader);
               }
               const meta = {
                 changelog,
                 changelogType: 'markdown',
                 displayName: path.basename(jar),
-                gameVersions: [hit.id],
-                releaseType: 1,
+                gameVersions: [mcId, loaderId],
+                releaseType: 'release',
               };
               const cfForm = new FormData();
               cfForm.append('metadata', JSON.stringify(meta));
@@ -239,6 +298,8 @@ jobs:
               const cfText = await cfRes.text();
               if (!cfRes.ok) throw new Error('CurseForge ' + cfRes.status + ' ' + cfText.slice(0, 500));
               console.log('CurseForge OK', path.basename(jar), cfText.slice(0, 180));
+              uploaded += 1;
             }
+            console.log('CurseForge uploaded', uploaded, 'file(s) to project', process.env.CURSEFORGE_ID);
           })().catch((e) => { console.error(e); process.exit(1); });
           NODE
