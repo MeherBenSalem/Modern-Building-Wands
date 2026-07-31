@@ -6,9 +6,15 @@
         "X# "
     ],
     "key": {
-        "O": "minecraft:diamond_block",
-        "X": "minecraft:diamond_pickaxe",
-        "#": "minecraft:glass_pane"
+        "O": {
+            "item": "minecraft:diamond_block"
+        },
+        "X": {
+            "item": "minecraft:diamond_pickaxe"
+        },
+        "#": {
+            "item": "minecraft:glass_pane"
+        }
     },
     "result": {
         "id": "reconstructedwands:core_destruction",

@@ -6,8 +6,12 @@
         "S  "
     ],
     "key": {
-        "N": "minecraft:nether_star",
-        "S": "minecraft:stick"
+        "N": {
+            "item": "minecraft:nether_star"
+        },
+        "S": {
+            "item": "minecraft:stick"
+        }
     },
     "result": {
         "id": "reconstructedwands:infinity_wand",

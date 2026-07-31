@@ -6,8 +6,12 @@
         "I  "
     ],
     "key": {
-        "S": "#minecraft:stone_crafting_materials",
-        "I": "minecraft:stick"
+        "S": {
+            "tag": "minecraft:stone_crafting_materials"
+        },
+        "I": {
+            "item": "minecraft:stick"
+        }
     },
     "result": {
         "id": "reconstructedwands:stone_wand",

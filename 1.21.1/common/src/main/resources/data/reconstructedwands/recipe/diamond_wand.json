@@ -6,8 +6,12 @@
         "S  "
     ],
     "key": {
-        "D": "minecraft:diamond",
-        "S": "minecraft:stick"
+        "D": {
+            "item": "minecraft:diamond"
+        },
+        "S": {
+            "item": "minecraft:stick"
+        }
     },
     "result": {
         "id": "reconstructedwands:diamond_wand",
