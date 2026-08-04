@@ -30,4 +30,7 @@ public class ConfigClient {
 
     // Press SNEAK+OPTKEY instead of SNEAK for opening wand GUI
     public static final SimpleValue<Boolean> SHIFTOPT_GUI = new SimpleValue<>(true);
+
+    // Enable OPTKEY undo (highlight + sneak+RMB revert). Disable to turn undo off.
+    public static final SimpleValue<Boolean> ENABLE_UNDO = new SimpleValue<>(true);
 }

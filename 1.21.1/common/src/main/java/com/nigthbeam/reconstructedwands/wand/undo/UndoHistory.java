@@ -6,8 +6,11 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import com.nigthbeam.reconstructedwands.basics.WandUtil;
 import com.nigthbeam.reconstructedwands.platform.Services;
 
 import java.util.*;
@@ -28,6 +31,8 @@ public class UndoHistory {
     }
 
     public void add(Player player, Level world, List<ISnapshot> placeSnapshots) {
+        if (!Services.CONFIG.isUndoEnabled())
+            return;
         LinkedList<HistoryEntry> list = getEntryFromPlayer(player).entries;
         list.add(new HistoryEntry(placeSnapshots, world));
         int maxHistory = Services.CONFIG.getUndoHistory();
@@ -40,6 +45,8 @@ public class UndoHistory {
     }
 
     public void updateClient(Player player, boolean ctrlDown) {
+        if (!Services.CONFIG.isUndoEnabled())
+            return;
         Level world = player.level();
         if (world.isClientSide)
             return;
@@ -68,10 +75,14 @@ public class UndoHistory {
     }
 
     public boolean isUndoActive(Player player) {
+        if (!Services.CONFIG.isUndoEnabled())
+            return false;
         return getEntryFromPlayer(player).undoActive;
     }
 
     public boolean undo(Player player, Level world, BlockPos pos) {
+        if (!Services.CONFIG.isUndoEnabled())
+            return false;
         PlayerEntry playerEntry = getEntryFromPlayer(player);
         if (!playerEntry.undoActive)
             return false;
@@ -140,8 +151,34 @@ public class UndoHistory {
                 if (!snapshot.canRestore(world, player))
                     return false;
             }
+
+            if (!player.isCreative()) {
+                Map<Item, Integer> required = new HashMap<>();
+                for (ISnapshot snapshot : placeSnapshots) {
+                    if (snapshot instanceof DestroySnapshot) {
+                        Item item = snapshot.getBlockState().getBlock().asItem();
+                        if (item == null || item == Items.AIR)
+                            continue;
+                        required.merge(item, 1, Integer::sum);
+                    }
+                }
+                for (Map.Entry<Item, Integer> entry : required.entrySet()) {
+                    int available = 0;
+                    for (ItemStack stack : WandUtil.getFullInv(player)) {
+                        if (stack == null || stack.isEmpty())
+                            continue;
+                        if (WandUtil.stackEquals(stack, entry.getKey()))
+                            available += stack.getCount();
+                    }
+                    if (available < entry.getValue())
+                        return false;
+                }
+            }
+
             for (ISnapshot snapshot : placeSnapshots) {
-                if (snapshot.restore(world, player) && !player.isCreative()) {
+                if (!snapshot.restore(world, player))
+                    return false;
+                if (!player.isCreative()) {
                     ItemStack stack = snapshot.getRequiredItems();
                     if (!player.getInventory().add(stack)) {
                         player.drop(stack, false);

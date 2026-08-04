@@ -2,6 +2,7 @@ package com.nigthbeam.reconstructedwands.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.nigthbeam.reconstructedwands.basics.ConfigClient;
 import com.nigthbeam.reconstructedwands.basics.WandUtil;
 import com.nigthbeam.reconstructedwands.items.wand.ItemWand;
 import com.nigthbeam.reconstructedwands.wand.WandJob;
@@ -45,15 +46,15 @@ public class RenderBlockPreview {
         float red = 0.0F;
         float green = 0.0F;
         float blue = 0.0F;
-        if (!(player.isCrouching() && ClientEvents.isOptKeyDown())) {
+        if (ConfigClient.ENABLE_UNDO.get() && player.isCrouching() && ClientEvents.isOptKeyDown()) {
+            blocks = undoBlocks;
+            green = 1.0F;
+        } else {
             if (wandJob == null || !compareRTR(wandJob.rayTraceResult, hitResult) || !wandJob.wand.equals(wand)
                     || wandJob.blockCount() < 2) {
                 wandJob = ItemWand.getWandJob(player, player.level(), hitResult, wand);
             }
             blocks = wandJob.getBlockPositions();
-        } else {
-            blocks = undoBlocks;
-            green = 1.0F;
         }
 
         if (blocks == null || blocks.isEmpty()) {

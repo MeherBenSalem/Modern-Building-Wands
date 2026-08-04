@@ -10,6 +10,7 @@ public class ConfigClient {
     public static final ForgeConfigSpec.IntValue OPT_KEY;
     public static final ForgeConfigSpec.BooleanValue SHIFTOPT_MODE;
     public static final ForgeConfigSpec.BooleanValue SHIFTOPT_GUI;
+    public static final ForgeConfigSpec.BooleanValue ENABLE_UNDO;
 
     static {
         Pair<ClientConfig, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(ClientConfig::new);
@@ -20,12 +21,14 @@ public class ConfigClient {
         OPT_KEY = CLIENT.optKey;
         SHIFTOPT_MODE = CLIENT.shiftOptMode;
         SHIFTOPT_GUI = CLIENT.shiftOptGui;
+        ENABLE_UNDO = CLIENT.enableUndo;
     }
 
     public static class ClientConfig {
         public final ForgeConfigSpec.IntValue optKey;
         public final ForgeConfigSpec.BooleanValue shiftOptMode;
         public final ForgeConfigSpec.BooleanValue shiftOptGui;
+        public final ForgeConfigSpec.BooleanValue enableUndo;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.comment("This is the Client config for ConstructionWand.",
@@ -43,6 +46,8 @@ public class ConfigClient {
             shiftOptMode = builder.define("ShiftOpt", false);
             builder.comment("Press SNEAK+OPTKEY instead of SNEAK for opening wand GUI");
             shiftOptGui = builder.define("ShiftOptGUI", false);
+            builder.comment("Enable OPTKEY undo (highlight + sneak+RMB revert). Disable to turn undo off.");
+            enableUndo = builder.define("EnableUndo", true);
             builder.pop();
         }
     }

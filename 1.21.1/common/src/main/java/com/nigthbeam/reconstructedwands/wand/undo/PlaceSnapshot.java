@@ -76,12 +76,14 @@ public class PlaceSnapshot implements ISnapshot {
 
     @Override
     public boolean canRestore(Level world, Player player) {
-        return true;
+        return world.getBlockState(pos).is(block.getBlock());
     }
 
     @Override
     public boolean restore(Level world, Player player) {
-        return WandUtil.removeBlock(world, player, block, pos);
+        if (world.isClientSide)
+            return false;
+        return world.removeBlock(pos, false);
     }
 
     @Override

@@ -14,6 +14,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.neoforge.client.event.RenderHighlightEvent;
 import net.neoforged.bus.api.SubscribeEvent;
+import com.nigthbeam.reconstructedwands.basics.ConfigClient;
 import com.nigthbeam.reconstructedwands.basics.WandUtil;
 import com.nigthbeam.reconstructedwands.items.wand.ItemWand;
 import com.nigthbeam.reconstructedwands.wand.WandJob;
@@ -40,7 +41,10 @@ public class RenderBlockPreview {
         if (wand == null)
             return;
 
-        if (!(player.isCrouching() && ClientEvents.isOptKeyDown())) {
+        if (ConfigClient.ENABLE_UNDO.get() && player.isCrouching() && ClientEvents.isOptKeyDown()) {
+            blocks = undoBlocks;
+            colorG = 1;
+        } else {
             // Use cached wandJob for previews of the same target pos/dir
             // Exception: always update if blockCount < 2 to prevent 1-block previews when
             // block updates
@@ -50,9 +54,6 @@ public class RenderBlockPreview {
                 wandJob = ItemWand.getWandJob(player, player.level(), rtr, wand);
             }
             blocks = wandJob.getBlockPositions();
-        } else {
-            blocks = undoBlocks;
-            colorG = 1;
         }
 
         if (blocks == null || blocks.isEmpty())

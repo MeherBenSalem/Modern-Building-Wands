@@ -2,6 +2,7 @@ package com.nigthbeam.reconstructedwands.wand.undo;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -73,7 +74,22 @@ public class DestroySnapshot implements ISnapshot {
 
     @Override
     public boolean restore(Level world, Player player) {
-        return WandUtil.placeBlock(world, player, block, pos, null);
+        Item blockItem = block.getBlock().asItem();
+        boolean consumed = false;
+        if (!player.isCreative()) {
+            if (!WandUtil.consumeOneItem(player, blockItem))
+                return false;
+            consumed = true;
+        }
+        if (!WandUtil.placeBlock(world, player, block, pos, null)) {
+            if (consumed) {
+                ItemStack stack = new ItemStack(blockItem);
+                if (!player.getInventory().add(stack))
+                    player.drop(stack, false);
+            }
+            return false;
+        }
+        return true;
     }
 
     @Override

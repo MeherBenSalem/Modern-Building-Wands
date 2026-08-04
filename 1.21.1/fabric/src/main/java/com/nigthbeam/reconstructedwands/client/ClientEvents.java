@@ -45,7 +45,7 @@ public class ClientEvents {
             if (wand == null)
                 return;
 
-            boolean optState = isOptKeyDown();
+            boolean optState = isUndoEnabled() && isOptKeyDown();
             if (optPressed != optState) {
                 optPressed = optState;
                 com.nigthbeam.reconstructedwands.network.ModMessages.sendToServer(
@@ -70,6 +70,10 @@ public class ClientEvents {
 
     public static boolean isOptKeyDown() {
         return isKeyDown(ConfigClient.OPT_KEY.get());
+    }
+
+    public static boolean isUndoEnabled() {
+        return ConfigClient.ENABLE_UNDO.get();
     }
 
     public static boolean modeKeyCombDown(Player player) {

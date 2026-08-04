@@ -102,4 +102,9 @@ public class NeoForgeConfigHelper implements IConfigHelper {
     public boolean isAngelFalling() {
         return false;
     }
+
+    @Override
+    public boolean isUndoEnabled() {
+        return true;
+    }
 }

@@ -13,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import com.nigthbeam.reconstructedwands.basics.ConfigClient;
 import com.nigthbeam.reconstructedwands.basics.WandUtil;
 import com.nigthbeam.reconstructedwands.items.wand.ItemWand;
 import com.nigthbeam.reconstructedwands.wand.WandJob;
@@ -48,16 +49,16 @@ public class RenderBlockPreview {
         Set<BlockPos> blocks;
         float colorR = 0, colorG = 0, colorB = 0;
 
-        if (!(player.isCrouching() && ClientEvents.isOptKeyDown())) {
+        if (ConfigClient.ENABLE_UNDO.get() && player.isCrouching() && ClientEvents.isOptKeyDown()) {
+            blocks = undoBlocks;
+            colorG = 1;
+        } else {
             // Use cached wandJob for previews of the same target pos/dir
             if (wandJob == null || !compareRTR(wandJob.rayTraceResult, rtr) || !(wandJob.wand.equals(wand))
                     || wandJob.blockCount() < 2) {
                 wandJob = ItemWand.getWandJob(player, player.level(), rtr, wand);
             }
             blocks = wandJob.getBlockPositions();
-        } else {
-            blocks = undoBlocks;
-            colorG = 1;
         }
 
         if (blocks == null || blocks.isEmpty()) {

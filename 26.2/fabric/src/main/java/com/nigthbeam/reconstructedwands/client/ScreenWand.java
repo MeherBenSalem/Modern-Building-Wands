@@ -52,7 +52,6 @@ public class ScreenWand extends Screen {
 
     @Override
     public void extractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        extractBackground(guiGraphics, mouseX, mouseY, partialTicks);
         guiGraphics.centeredText(font, wand.getDisplayName(), width / 2,
                 height / 2 - FIELD_HEIGHT / 2 - SPACING_HEIGHT, 16777215);
         super.extractRenderState(guiGraphics, mouseX, mouseY, partialTicks);

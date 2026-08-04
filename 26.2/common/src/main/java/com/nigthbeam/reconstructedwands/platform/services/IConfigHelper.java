@@ -23,4 +23,6 @@ public interface IConfigHelper {
     int getUndoHistory();
 
     boolean isAngelFalling();
+
+    boolean isUndoEnabled();
 }

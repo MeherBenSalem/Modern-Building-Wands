@@ -125,6 +125,24 @@ public class WandUtil {
         return total;
     }
 
+    public static boolean consumeOneItem(Player player, Item item) {
+        if (player.isCreative())
+            return true;
+        if (item == null || item == Items.AIR)
+            return false;
+
+        for (ItemStack stack : getFullInv(player)) {
+            if (stack == null || stack.isEmpty())
+                continue;
+            if (stackEquals(stack, item)) {
+                stack.shrink(1);
+                player.getInventory().setChanged();
+                return true;
+            }
+        }
+        return false;
+    }
+
     private static boolean isPositionModifiable(Level world, Player player, BlockPos pos) {
         // Is position out of world?
         if (!world.isInWorldBounds(pos))

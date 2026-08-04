@@ -1,6 +1,7 @@
 package com.nigthbeam.reconstructedwands.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.nigthbeam.reconstructedwands.basics.ConfigClient;
 import com.nigthbeam.reconstructedwands.basics.WandUtil;
 import com.nigthbeam.reconstructedwands.items.wand.ItemWand;
 import com.nigthbeam.reconstructedwands.wand.WandJob;
@@ -35,16 +36,16 @@ public class RenderBlockPreview {
 
         Set<BlockPos> blocks;
         int color;
-        if (!(player.isCrouching() && ClientEvents.isOptKeyDown())) {
+        if (ConfigClient.ENABLE_UNDO.get() && player.isCrouching() && ClientEvents.isOptKeyDown()) {
+            blocks = undoBlocks;
+            color = 0x9900FF00;
+        } else {
             if (wandJob == null || !compareRTR(wandJob.rayTraceResult, hitResult) || !wandJob.wand.equals(wand)
                     || wandJob.blockCount() < 2) {
                 wandJob = ItemWand.getWandJob(player, player.level(), hitResult, wand);
             }
             blocks = wandJob.getBlockPositions();
             color = 0x99FF0000;
-        } else {
-            blocks = undoBlocks;
-            color = 0x9900FF00;
         }
 
         if (blocks == null || blocks.isEmpty()) {
