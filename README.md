@@ -1,6 +1,7 @@
-# REConstructed Wands
+# RE:Constructed Wands
 
-REConstructed Wands is maintained as three independent Minecraft MultiLoader workspaces. Gameplay code lives in each workspace's `common` module, with loader integration isolated in the loader modules.
+Building wands for Minecraft: place or remove multiple blocks at once, with
+optional cores, undo, and a configuration GUI.
 
 | Workspace | Minecraft | Loaders | Java |
 | --- | --- | --- | --- |
@@ -8,17 +9,43 @@ REConstructed Wands is maintained as three independent Minecraft MultiLoader wor
 | `1.21.1` | 1.21.1 | Fabric + NeoForge | 21 |
 | `26.2` | 26.2 | Fabric + NeoForge | 25 |
 
+## Features
+
+- Construction and destruction modes
+- Wand tiers from stone through infinity
+- Core upgrades (angel / destruction)
+- Undo for recent placements (can be disabled in client config)
+- Fabric, Forge, and NeoForge via MultiLoader workspaces
+
+## Installation
+
+1. Download the jar for your Minecraft version and loader from
+   [Modrinth](https://modrinth.com/mod/reconstructed-wands) or
+   [CurseForge](https://www.curseforge.com/minecraft/mc-mods/re-constructed-wands).
+2. Place it in your `mods` folder.
+3. Restart the game.
+
+## Usage
+
+- **Right-click** — place or destroy according to current mode
+- **Shift + right-click** — open the wand GUI
+
 ## Building
 
-Run the wrapper from the workspace you want to build:
-
 ```powershell
-cd 1.20.1
+cd 1.20.1   # or 1.21.1 / 26.2
 .\gradlew.bat build
 ```
 
-Use the matching JDK listed above. The consolidated `releases/` folder contains the final `1.1.5` runtime jars for all six loader targets.
+Use the JDK matching the workspace table. Output jars are under each loader
+module's `build/libs/`.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+Security reports: [.github/SECURITY.md](.github/SECURITY.md).
 
 ## License
 
-This project is licensed under the MIT License. See [LICENSE](LICENSE).
+Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) and
+[NOTICE](NOTICE).

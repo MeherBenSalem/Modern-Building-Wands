@@ -17,9 +17,10 @@ bin/
 *.ipr
 out/
 
-# VS Code
+# VS Code / Cursor
 .vscode/
 *.code-workspace
+.cursor/
 
 # MacOS
 .DS_Store
@@ -39,21 +40,24 @@ debug.log
 # Run folders
 run/
 runs/
-
 test/
 
-# Archives
+# Archives / built artifacts (do not commit jars)
 *.jar
 *.war
 *.zip
 *.tar
 *.tar.gz
+releases/
+dist/
 
-# Final release artifacts
-!releases/
-!releases/*.jar
-# Keep the wrapper
-!gradle/wrapper/gradle-wrapper.jar
+# Keep the Gradle wrapper jar
+!**/gradle/wrapper/gradle-wrapper.jar
+
+# Env / secrets
+.env
+.env.*
+!.env.example
 
 # Temp
 input.txt
