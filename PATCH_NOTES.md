@@ -1,5 +1,15 @@
 # Patch notes
 
+## 2.0.0 — The Architect Update
+
+A full rebuild: the new Exchange and Architect cores, undo and redo (Ctrl+Z / Ctrl+Y), blocks from shulker boxes,
+bundles, the Ender Chest and a bound chest, Ctrl + scroll size and Sneak + scroll lock, a HUD, a mode wheel and a new
+settings screen, colour-coded previews, claim and protection checks on every loader, a synced server config with
+deny tags and `/wands reload`, new textures and recipes, and repairable, enchantable wands. Available for Minecraft
+1.20.1 (Fabric, Forge), 1.21.1, 26.2 and 26.3 (Fabric, NeoForge). 1.x wands keep their cores and settings.
+
+Full notes: [patchnotes/2.0.0.md](patchnotes/2.0.0.md).
+
 ## 1.1.5
 
 - Fixed NeoForge/Fabric 26.2 wand GUI crash (`Can only blur once per frame`, #1)
