@@ -1,0 +1,19 @@
+{
+  "values": [
+    {
+      "id": "#c:ores",
+      "required": false
+    },
+    {
+      "id": "#forge:ores",
+      "required": false
+    },
+    "minecraft:budding_amethyst",
+    "minecraft:suspicious_sand",
+    "minecraft:suspicious_gravel",
+    "minecraft:infested_stone",
+    "minecraft:infested_cobblestone",
+    "minecraft:infested_deepslate",
+    "minecraft:infested_stone_bricks"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "X": "#minecraft:diamond_tool_materials",
+    "R": "minecraft:redstone",
+    "#": "minecraft:stick"
+  },
+  "pattern": [
+    "  X",
+    " R ",
+    "#  "
+  ],
+  "result": {
+    "id": "reconstructedwands:diamond_wand"
+  }
+}

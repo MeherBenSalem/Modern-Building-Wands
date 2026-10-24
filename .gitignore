@@ -31,6 +31,7 @@ ehthumbs.db
 Desktop.ini
 
 # Logs
+logs/
 *.log
 build_log.txt
 build_output.txt
@@ -42,13 +43,13 @@ run/
 runs/
 test/
 
-# Archives / built artifacts (do not commit jars)
+# Archives / built artifacts (do not commit jars, except the release jars the publish workflow uploads)
 *.jar
+!releases/*.jar
 *.war
 *.zip
 *.tar
 *.tar.gz
-releases/
 dist/
 
 # Keep the Gradle wrapper jar
@@ -62,3 +63,6 @@ dist/
 # Temp
 input.txt
 output.txt
+
+# Python
+__pycache__/

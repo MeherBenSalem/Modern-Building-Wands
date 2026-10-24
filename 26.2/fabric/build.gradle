@@ -2,10 +2,23 @@ plugins {
     id 'multiloader-loader'
     id 'net.fabricmc.fabric-loom'
 }
+repositories {
+    // Common Protection API: how Fabric claim mods (Open Parties and Claims, FTB Chunks, Flan, GOML...) answer
+    // "may this player build here?". Bundled in the jar (7 KB).
+    maven {
+        name = 'Nucleoid'
+        url = uri('https://maven.nucleoid.xyz')
+        content {
+            includeGroup('eu.pb4')
+        }
+    }
+}
+
 dependencies {
     minecraft("com.mojang:minecraft:${minecraft_version}")
     implementation("net.fabricmc:fabric-loader:${fabric_loader_version}")
     implementation("net.fabricmc.fabric-api:fabric-api:${fabric_version}")
+    include(implementation("eu.pb4:common-protection-api:2.0.0"))
 }
 
 loom {
@@ -25,6 +38,14 @@ loom {
             setConfigName('Fabric Server')
             ideConfigGenerated(true)
             runDir('runs/server')
+        }
+        // QA client: joins a server on localhost:25565 straight away (see tools/qa/).
+        qaClient {
+            client()
+            setConfigName('Fabric QA Client')
+            ideConfigGenerated(false)
+            runDir('runs/client')
+            programArgs('--quickPlayMultiplayer', 'localhost:25565', '--username', 'Builder', '--width', '1920', '--height', '1080')
         }
     }
 }

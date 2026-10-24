@@ -1,20 +1,24 @@
 {
-    "type": "minecraft:crafting_shaped",
-    "pattern": [
-        "  N",
-        " S ",
-        "S  "
-    ],
-    "key": {
-        "N": {
-            "item": "minecraft:nether_star"
-        },
-        "S": {
-            "item": "minecraft:stick"
-        }
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "X": {
+      "item": "minecraft:nether_star"
     },
-    "result": {
-        "item": "reconstructedwands:infinity_wand",
-        "count": 1
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "#": {
+      "item": "minecraft:stick"
     }
+  },
+  "pattern": [
+    "  X",
+    " R ",
+    "#  "
+  ],
+  "result": {
+    "item": "reconstructedwands:infinity_wand",
+    "count": 1
+  }
 }

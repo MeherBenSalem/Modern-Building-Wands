@@ -1,20 +1,24 @@
 {
-    "type": "minecraft:crafting_shaped",
-    "pattern": [
-        "  I",
-        " S ",
-        "S  "
-    ],
-    "key": {
-        "I": {
-            "item": "minecraft:iron_ingot"
-        },
-        "S": {
-            "item": "minecraft:stick"
-        }
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "X": {
+      "tag": "c:ingots/iron"
     },
-    "result": {
-        "id": "reconstructedwands:iron_wand",
-        "count": 1
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "#": {
+      "item": "minecraft:stick"
     }
+  },
+  "pattern": [
+    "  X",
+    " R ",
+    "#  "
+  ],
+  "result": {
+    "id": "reconstructedwands:iron_wand",
+    "count": 1
+  }
 }

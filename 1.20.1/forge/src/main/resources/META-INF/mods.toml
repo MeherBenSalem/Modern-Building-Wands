@@ -1,26 +1,29 @@
-modLoader="javafml"
-loaderVersion="${forge_loader_version_range}"
-license="${license}"
+modLoader = "javafml"
+loaderVersion = "${forge_loader_version_range}"
+license = "${license}"
+issueTrackerURL = "https://github.com/MeherBenSalem/Modern-Building-Wands/issues"
 
 [[mods]]
-modId="${mod_id}"
-version="${version}"
-displayName="${mod_name}"
-logoFile="logo.png"
-credits="${credits}"
-authors="${mod_author}"
-description='''${description}'''
+modId = "${mod_id}"
+version = "${version}"
+displayName = "${mod_name}"
+displayURL = "https://modrinth.com/mod/reconstructed-wands"
+logoFile = "logo.png"
+credits = "${credits}"
+authors = "${mod_author}"
+description = '''${description}'''
+# Forge 47 reads mixin configs from the jar manifest (MixinConfigs, see build.gradle), not from this file.
 
 [[dependencies.${mod_id}]]
-modId="forge"
-mandatory=true
-versionRange="${forge_loader_version_range}"
-ordering="NONE"
-side="BOTH"
+modId = "forge"
+mandatory = true
+versionRange = "[${forge_version},)"
+ordering = "NONE"
+side = "BOTH"
 
 [[dependencies.${mod_id}]]
-modId="minecraft"
-mandatory=true
-versionRange="${minecraft_version_range}"
-ordering="NONE"
-side="BOTH"
+modId = "minecraft"
+mandatory = true
+versionRange = "${minecraft_version_range}"
+ordering = "NONE"
+side = "BOTH"

@@ -1,17 +1,17 @@
 {
-    "type": "minecraft:crafting_shaped",
-    "pattern": [
-        " #X",
-        "#O#",
-        "X# "
-    ],
-    "key": {
-        "O": "minecraft:diamond_block",
-        "X": "minecraft:diamond_pickaxe",
-        "#": "minecraft:glass_pane"
-    },
-    "result": {
-        "id": "reconstructedwands:core_destruction",
-        "count": 1
-    }
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "O": "minecraft:diamond_block",
+    "X": "minecraft:diamond_pickaxe",
+    "#": "#c:glass_panes"
+  },
+  "pattern": [
+    " #X",
+    "#O#",
+    "X# "
+  ],
+  "result": {
+    "id": "reconstructedwands:core_destruction"
+  }
 }

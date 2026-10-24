@@ -1,23 +1,24 @@
 {
-    "type": "minecraft:crafting_shaped",
-    "pattern": [
-        " #X",
-        "#O#",
-        "X# "
-    ],
-    "key": {
-        "O": {
-            "item": "minecraft:feather"
-        },
-        "X": {
-            "item": "minecraft:gold_ingot"
-        },
-        "#": {
-            "item": "minecraft:glass_pane"
-        }
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "O": {
+      "item": "minecraft:feather"
     },
-    "result": {
-        "id": "reconstructedwands:core_angel",
-        "count": 1
+    "X": {
+      "item": "minecraft:gold_ingot"
+    },
+    "#": {
+      "tag": "c:glass_panes"
     }
+  },
+  "pattern": [
+    " #X",
+    "#O#",
+    "X# "
+  ],
+  "result": {
+    "id": "reconstructedwands:core_angel",
+    "count": 1
+  }
 }

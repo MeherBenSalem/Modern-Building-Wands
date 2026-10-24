@@ -7,22 +7,28 @@
     "authors": [
         "${mod_author}"
     ],
+    "contributors": [
+        "ThetaDev (original Construction Wand)"
+    ],
     "contact": {
-        "homepage": "https://github.com/Theta-Dev/ConstructionWand",
-        "sources": "https://github.com/Theta-Dev/ConstructionWand"
+        "homepage": "https://modrinth.com/mod/reconstructed-wands",
+        "sources": "https://github.com/MeherBenSalem/Modern-Building-Wands",
+        "issues": "https://github.com/MeherBenSalem/Modern-Building-Wands/issues"
     },
     "license": "${license}",
     "icon": "logo.png",
     "environment": "*",
     "entrypoints": {
         "main": [
-            "com.nigthbeam.reconstructedwands.REConstructedWandsFabric"
+            "com.nightbeam.reconstructedwands.fabric.ReconstructedWandsFabric"
         ],
         "client": [
-            "com.nigthbeam.reconstructedwands.client.REConstructedWandsFabricClient"
+            "com.nightbeam.reconstructedwands.fabric.ReconstructedWandsFabricClient"
         ]
     },
-    "mixins": [],
+    "mixins": [
+        "reconstructedwands.mixins.json"
+    ],
     "depends": {
         "fabricloader": ">=${fabric_loader_version}",
         "fabric-api": "*",
