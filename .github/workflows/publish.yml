@@ -1,5 +1,5 @@
 # Dual-publish NightBeam mods/plugins to Modrinth + CurseForge on version tags.
-# MultiLoader repos (e.g. Modern-Building-Wands): prefer prebuilt jars in releases/.
+# MultiLoader repo: prebuilt jars in releases/ (reconstructedwands-{loader}-{minecraft}-{version}.jar) are preferred.
 #
 # Org/repo secrets:
 #   MODRINTH_TOKEN
@@ -32,6 +32,13 @@ on:
         description: "modrinth, curseforge, or both"
         required: false
         default: "both"
+      minecraft_version:
+        description: "Optional MC version filter (e.g. 26.2) — only upload matching jars"
+        required: false
+      update_listing:
+        description: "Also update the Modrinth description, summary and icon from marketing/ (true/false)"
+        required: false
+        default: "false"
 
 jobs:
   publish:
@@ -60,7 +67,9 @@ jobs:
         run: |
           VERSION="${{ steps.ver.outputs.version }}"
           mapfile -t JARS < <(find releases -maxdepth 1 -type f -name "*-${VERSION}.jar" \
-            ! -name "*-sources.jar" ! -name "*-javadoc.jar" 2>/dev/null | sort)
+            ! -name "*-sources.jar" ! -name "*-javadoc.jar" \
+            ! -name "*-dev.jar" ! -name "*-dev-shadow.jar" \
+            ! -name "*-common-*.jar" 2>/dev/null | sort)
           if [ ${#JARS[@]} -gt 0 ]; then
             echo "found=true" >> "$GITHUB_OUTPUT"
             EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
@@ -89,7 +98,7 @@ jobs:
         run: |
           set -euo pipefail
           built=0
-          for ws in 1.20.1 1.21.1 26.2; do
+          for ws in 1.20.1 1.21.1 26.2 26.3; do
             if [ -f "$ws/gradlew" ] || [ -f "$ws/settings.gradle" ] || [ -f "$ws/settings.gradle.kts" ]; then
               echo "Building workspace $ws"
               (
@@ -119,15 +128,34 @@ jobs:
         shell: bash
         run: |
           VERSION="${{ steps.ver.outputs.version }}"
-          mapfile -t JARS < <(find releases -maxdepth 1 -type f -name "*-${VERSION}.jar" 2>/dev/null | sort)
+          mapfile -t JARS < <(find releases -maxdepth 1 -type f -name "*-${VERSION}.jar" \
+            ! -name "*-sources.jar" ! -name "*-javadoc.jar" \
+            ! -name "*-dev.jar" ! -name "*-dev-shadow.jar" \
+            ! -name "*-common-*.jar" 2>/dev/null | sort)
           if [ ${#JARS[@]} -eq 0 ]; then
             mapfile -t JARS < <(find . -type f -path "*/build/libs/*-${VERSION}.jar" \
               ! -name "*-sources.jar" ! -name "*-javadoc.jar" \
-              ! -name "*-dev.jar" ! -name "*-dev-shadow.jar" | sort)
+              ! -name "*-dev.jar" ! -name "*-dev-shadow.jar" \
+              ! -name "*-common-*.jar" | sort)
           fi
           if [ ${#JARS[@]} -eq 0 ]; then
             echo "No jars found for version ${VERSION}" >&2
             exit 1
+          fi
+          MC_FILTER="${{ inputs.minecraft_version }}"
+          if [ -n "$MC_FILTER" ]; then
+            FILTERED=()
+            for jar in "${JARS[@]}"; do
+              base=$(basename "$jar")
+              if echo "$base" | grep -qE "(^|-)${MC_FILTER}(-|$)"; then
+                FILTERED+=("$jar")
+              fi
+            done
+            if [ ${#FILTERED[@]} -eq 0 ]; then
+              echo "No jars matched minecraft_version filter ${MC_FILTER}" >&2
+              exit 1
+            fi
+            JARS=("${FILTERED[@]}")
           fi
           printf '%s\n' "${JARS[@]}"
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
@@ -158,6 +186,7 @@ jobs:
           node <<'NODE'
           const fs = require('fs');
           const path = require('path');
+          const { detectRequired, LOADER_IDS } = require('./.github/scripts/detect-jar-meta.js');
           const version = process.env.VERSION;
           const platforms = (process.env.PLATFORMS || 'both').toLowerCase();
           const doModrinth = platforms === 'both' || platforms === 'modrinth';
@@ -165,25 +194,12 @@ jobs:
           const jars = process.env.JAR_LIST.split(/\n/).map(s => s.trim()).filter(Boolean);
           if (!jars.length) throw new Error('No jars to upload');
           let changelog = `Release ${version}`;
-          if (process.env.CHANGELOG_FILE && fs.existsSync(process.env.CHANGELOG_FILE)) {
+          // Prefer this version's own notes (patchnotes/<version>.md) over the full history.
+          const versionNotes = path.join('patchnotes', `${version}.md`);
+          if (fs.existsSync(versionNotes)) {
+            changelog = fs.readFileSync(versionNotes, 'utf8');
+          } else if (process.env.CHANGELOG_FILE && fs.existsSync(process.env.CHANGELOG_FILE)) {
             changelog = fs.readFileSync(process.env.CHANGELOG_FILE, 'utf8');
-          }
-
-          // Stable CurseForge loader version IDs (Upload API Game Versions docs)
-          const LOADER_IDS = { fabric: 7499, forge: 7498, neoforge: 10150, quilt: 9153 };
-
-          function detect(jar) {
-            const n = path.basename(jar).toLowerCase();
-            let loader = 'fabric';
-            if (n.includes('neoforge')) loader = 'neoforge';
-            else if (n.includes('forge')) loader = 'forge';
-            else if (n.includes('quilt')) loader = 'quilt';
-            let gv = null;
-            const m26 = n.match(/(?:^|-)(26\.\d+)(?:-|$)/);
-            const m1 = n.match(/(?:^|-)(1\.\d+(?:\.\d+)?)(?:-|$)/);
-            if (m26) gv = m26[1];
-            else if (m1) gv = m1[1];
-            return { loader, gv };
           }
 
           function flattenVersions(payload) {
@@ -210,13 +226,16 @@ jobs:
           (async () => {
             if (doModrinth) {
               for (const jar of jars) {
-                const { loader, gv } = detect(jar);
-                const gameVersions = gv ? [gv] : ['1.21.1'];
+                // Must parse MC from filename — never default (26.1.2 was once mis-tagged as 1.21.1).
+                const { loader, gv } = detectRequired(jar);
+                const gameVersions = [gv];
+                // Fabric jars need Fabric API (Modrinth project P7dR8mSH).
+                const dependencies = loader === 'fabric' ? [{ project_id: 'P7dR8mSH', dependency_type: 'required' }] : [];
                 const body = {
                   name: `${version} ${loader} ${gameVersions[0]}`,
                   version_number: `${version}+${loader}-${gameVersions[0]}`,
                   changelog,
-                  dependencies: [],
+                  dependencies,
                   game_versions: gameVersions,
                   version_type: 'release',
                   loaders: [loader],
@@ -236,7 +255,7 @@ jobs:
                 });
                 const mrText = await mrRes.text();
                 if (!mrRes.ok) throw new Error('Modrinth ' + mrRes.status + ' ' + mrText.slice(0, 500));
-                console.log('Modrinth OK', path.basename(jar), mrText.slice(0, 180));
+                console.log('Modrinth OK', path.basename(jar), 'game=' + gv, mrText.slice(0, 180));
               }
             } else {
               console.log('Skipping Modrinth (platforms=' + platforms + ')');
@@ -271,8 +290,7 @@ jobs:
 
             let uploaded = 0;
             for (const jar of jars) {
-              const { loader, gv } = detect(jar);
-              const want = gv || '1.21.1';
+              const { loader, gv: want } = detectRequired(jar);
               const mcId = findVersionId(flat, want);
               const loaderId = LOADER_IDS[loader];
               const clientId = findVersionId(flat, 'Client');
@@ -298,6 +316,9 @@ jobs:
                 releaseType: 'release',
               };
               if (gameVersionNames.length) meta.gameVersionNames = gameVersionNames;
+              if (loader === 'fabric') {
+                meta.relations = { projects: [{ slug: 'fabric-api', type: 'requiredDependency' }] };
+              }
               const cfForm = new FormData();
               cfForm.append('metadata', JSON.stringify(meta));
               cfForm.append('file', new Blob([fs.readFileSync(jar)]), path.basename(jar));
@@ -307,9 +328,43 @@ jobs:
               );
               const cfText = await cfRes.text();
               if (!cfRes.ok) throw new Error('CurseForge ' + cfRes.status + ' ' + cfText.slice(0, 500));
-              console.log('CurseForge OK', path.basename(jar), cfText.slice(0, 180));
+              console.log('CurseForge OK', path.basename(jar), 'game=' + want, cfText.slice(0, 180));
               uploaded += 1;
             }
             console.log('CurseForge uploaded', uploaded, 'file(s) to project', process.env.CURSEFORGE_ID);
+          })().catch((e) => { console.error(e); process.exit(1); });
+          NODE
+
+      # CurseForge has no API for the project description: paste marketing/curseforge/description.md there by hand.
+      - name: Update Modrinth listing
+        if: ${{ inputs.update_listing == 'true' && inputs.dry_run != 'true' }}
+        continue-on-error: true
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+          MODRINTH_ID: ${{ vars.MODRINTH_ID }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('fs');
+          (async () => {
+            const headers = { Authorization: process.env.MODRINTH_TOKEN };
+            const project = `https://api.modrinth.com/v2/project/${process.env.MODRINTH_ID}`;
+            const body = fs.readFileSync('marketing/curseforge/description.md', 'utf8');
+            const description = fs.readFileSync('marketing/curseforge/summary.txt', 'utf8').trim();
+            const res = await fetch(project, {
+              method: 'PATCH',
+              headers: { ...headers, 'Content-Type': 'application/json' },
+              body: JSON.stringify({ body, description }),
+            });
+            if (!res.ok) throw new Error('Modrinth listing ' + res.status + ' ' + (await res.text()).slice(0, 300));
+            console.log('Modrinth description and summary updated');
+            const icon = await fetch(`${project}/icon?ext=png`, {
+              method: 'PATCH',
+              headers: { ...headers, 'Content-Type': 'image/png' },
+              body: fs.readFileSync('marketing/images/icon.png'),
+            });
+            if (!icon.ok) throw new Error('Modrinth icon ' + icon.status + ' ' + (await icon.text()).slice(0, 300));
+            console.log('Modrinth icon updated');
           })().catch((e) => { console.error(e); process.exit(1); });
           NODE
