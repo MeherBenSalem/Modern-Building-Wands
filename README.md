@@ -109,7 +109,7 @@ Prebuilt release jars go in `releases/` for the publish workflow. Release notes 
 - [Discord](https://discord.gg/SAmd9fhNhr)
 - [Modrinth](https://modrinth.com/mod/reconstructed-wands/versions)
 - [CurseForge](https://www.curseforge.com/minecraft/mc-mods/re-constructed-wands)
-- [Ko-fi](https://ko-fi.com/nightbeamstudio)
+- [Support the project](https://nightbeam.dev/support)
 
 ## Contributing
 

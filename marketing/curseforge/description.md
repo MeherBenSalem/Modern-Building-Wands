@@ -184,4 +184,4 @@ can be turned off.
 
 ![Divider](https://raw.githubusercontent.com/MeherBenSalem/modern-building-wands/main/marketing/images/divider.png)
 
-[Discord](https://discord.gg/SAmd9fhNhr) · [Source and issues](https://github.com/MeherBenSalem/modern-building-wands) · [Ko-fi](https://ko-fi.com/nightbeamstudio) · Made by NightBeam Studio
+[Discord](https://discord.gg/SAmd9fhNhr) · [Source and issues](https://github.com/MeherBenSalem/modern-building-wands) · [Support the project](https://nightbeam.dev/support) · Made by NightBeam Studio
