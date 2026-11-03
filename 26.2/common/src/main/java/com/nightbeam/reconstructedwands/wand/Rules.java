@@ -37,12 +37,12 @@ public final class Rules {
         if (state.isAir()) {
             return true;
         }
-        return replace && state.canBeReplaced() && !state.is(ModTags.DENIED) && !state.hasBlockEntity();
+        return replace && state.canBeReplaced() && !denied(state, player) && !state.hasBlockEntity();
     }
 
     /** Whether a wand may remove {@code state} at {@code pos} (Destruction, and the old block of an Exchange). */
     public static boolean removable(Level level, Player player, BlockPos pos, BlockState state, boolean exchange) {
-        if (state.isAir() || !modifiable(level, player, pos) || state.is(ModTags.DENIED) || state.is(ModTags.NO_DISMANTLE)) {
+        if (state.isAir() || !modifiable(level, player, pos) || denied(state, player) || state.is(ModTags.NO_DISMANTLE)) {
             return false;
         }
         if (state.hasBlockEntity() && (exchange || !player.isCreative())) {
@@ -51,8 +51,12 @@ public final class Rules {
         return player.isCreative() || state.getDestroySpeed(level, pos) >= 0;
     }
 
-    public static boolean denied(BlockState state) {
-        return state.is(ModTags.DENIED);
+    /**
+     * Whether wands must leave {@code state} alone. Blocks in {@code #reconstructedwands:creative_only} (barriers, light
+     * blocks, structure voids) are allowed for creative-mode players, who can place them by hand anyway.
+     */
+    public static boolean denied(BlockState state, Player player) {
+        return state.is(ModTags.DENIED) && !(player.isCreative() && state.is(ModTags.CREATIVE_ONLY));
     }
 
     /** True if a living entity (not a spectator) is in the way of {@code state} at {@code pos}. */

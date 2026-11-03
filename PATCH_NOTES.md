@@ -1,5 +1,13 @@
 # Patch notes
 
+## 2.0.1
+
+- Barriers, light blocks and structure voids can be used with wands again in creative mode (new
+  `#reconstructedwands:creative_only` tag). They stay blocked in survival, as do bedrock, command blocks, spawners
+  and portals for everyone.
+
+Full notes: [patchnotes/2.0.1.md](patchnotes/2.0.1.md).
+
 ## 2.0.0 — The Architect Update
 
 A full rebuild: the new Exchange and Architect cores, undo and redo (Ctrl+Z / Ctrl+Y), blocks from shulker boxes,

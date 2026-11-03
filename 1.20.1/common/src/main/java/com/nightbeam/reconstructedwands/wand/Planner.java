@@ -183,7 +183,7 @@ public final class Planner {
     /** The state an Exchange puts in place of {@code old}: the new block, keeping the old block's orientation. */
     static @Nullable BlockState swapState(Level level, Player player, BlockHitResult hit, BlockPos pos, BlockItem item, BlockState old) {
         Block block = item.getBlock();
-        if (Rules.denied(block.defaultBlockState())) {
+        if (Rules.denied(block.defaultBlockState(), player)) {
             return null;
         }
         BlockState state = Placing.orient(block.defaultBlockState(), old);

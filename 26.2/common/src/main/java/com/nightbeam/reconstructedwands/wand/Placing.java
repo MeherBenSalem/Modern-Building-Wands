@@ -66,7 +66,7 @@ public final class Placing {
         }
         BlockState state = item.getBlock().getStateForPlacement(context);
         // Two-block blocks (beds, doors, tall plants) place their other half themselves; wands leave them alone.
-        if (state == null || Rules.denied(state) || state.hasProperty(BlockStateProperties.BED_PART)
+        if (state == null || Rules.denied(state, player) || state.hasProperty(BlockStateProperties.BED_PART)
                 || state.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF)) {
             return null;
         }
