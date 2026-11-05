@@ -1,5 +1,9 @@
 ![RE:Constructed Wands](https://raw.githubusercontent.com/MeherBenSalem/modern-building-wands/main/marketing/images/banner.png)
 
+**[Discord](https://discord.gg/TJc3CxR4jK) · [The modpack](https://www.curseforge.com/minecraft/modpacks/remnants-ashen-legacy) · [Support NightBeam](https://nightbeam.dev/support) · [NightBeam Pro](https://nightbeam.dev/memberships) · [All projects](https://nightbeam.dev/projects)**
+
+> **Featured in [Remnants: Ashen Legacy](https://www.curseforge.com/minecraft/modpacks/remnants-ashen-legacy)**, NightBeam's story-driven soulslike RPG modpack.
+
 **Build the boring parts in one click.** Point a wand at a wall and the next layer appears. Fill a floor, clear a
 cliff face, swap cobblestone for stone bricks, or click twice and get a ring, a box or a whole wall. You see
 every block before you click, you can undo anything, and the wand takes its blocks from your shulker boxes, bundles,
@@ -70,10 +74,10 @@ once; switch modes with the mode wheel (hold **R**) or the settings screen.
 
 ![Shapes in two clicks](https://raw.githubusercontent.com/MeherBenSalem/modern-building-wands/main/marketing/images/card-architect.png)
 
-Right-click the first corner, then aim at the second: the preview follows your aim and the next right-click builds
+Right-click one corner, then aim at the other: the preview follows your aim and the next right-click builds
 it. A **line, wall, floor, box or cube** fills the space between the two corners; a **circle or ring** is centred on
-the first click and reaches out to the second. Pick the shape with Sneak + scroll, and right-click the air to clear the
-first click and start again.
+the click you started with and reaches out to the second. Pick the shape with Sneak + scroll, and right-click the air to clear the
+starting click and start again.
 
 ![Block supply](https://raw.githubusercontent.com/MeherBenSalem/modern-building-wands/main/marketing/images/header-supply.png)
 
@@ -87,7 +91,7 @@ Wands look for blocks in this order:
 4. your **Ender Chest**,
 5. and last your hotbar and offhand, so the stacks you hold are kept longest.
 
-The HUD shows how many blocks you have across all of them. Only plain blocks are used: a renamed or enchanted stack is
+The HUD shows how many blocks you have across all of them. Just plain blocks are used: a renamed or enchanted stack is
 never placed by mistake.
 
 ![Undo and redo](https://raw.githubusercontent.com/MeherBenSalem/modern-building-wands/main/marketing/images/header-undo.png)
@@ -184,4 +188,14 @@ can be turned off.
 
 ![Divider](https://raw.githubusercontent.com/MeherBenSalem/modern-building-wands/main/marketing/images/divider.png)
 
-[Discord](https://discord.gg/SAmd9fhNhr) · [Source and issues](https://github.com/MeherBenSalem/modern-building-wands) · [Support the project](https://nightbeam.dev/support) · Made by NightBeam Studio
+---
+
+### More from NightBeam Studio
+
+- **[Remnants: Ashen Legacy](https://www.curseforge.com/minecraft/modpacks/remnants-ashen-legacy)**: the story-driven soulslike RPG modpack built on NightBeam's mods
+- **[Premium server plugins](https://nightbeam.dev/store)**: anti-cheat, ranked PvP, SMP setups and more on BuiltByBit
+- **[NightBeam Pro](https://nightbeam.dev/memberships)**: the model library and NightBeam Forge credits, from $5 a month
+- **[Discord](https://discord.gg/TJc3CxR4jK)**: support, bug reports, suggestions and early looks
+- **[Support NightBeam](https://nightbeam.dev/support)**: help keep every mod free
+
+**Follow:** [YouTube](https://www.youtube.com/@nightbeamstudio) · [Instagram](https://www.instagram.com/nightbeamstudio/) · [X](https://x.com/NightBeamLLC) · [Facebook](https://www.facebook.com/profile.php?id=61574823331471) · [Source and issues](https://github.com/MeherBenSalem/modern-building-wands)
