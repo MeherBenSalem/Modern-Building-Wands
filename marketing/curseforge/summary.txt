@@ -1,1 +1,1 @@
-Building wands: extend walls and floors in one click, place in mid-air, clear or swap whole surfaces, and build lines, boxes and rings in two clicks. Live previews, undo and redo, blocks from shulker boxes, bundles and chests.
+Building wands that extend walls and floors in one click, place in mid-air, swap whole surfaces and build lines, boxes and rings, with live previews and undo.
