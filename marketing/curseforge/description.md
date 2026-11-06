@@ -1,6 +1,6 @@
 ![RE:Constructed Wands](https://raw.githubusercontent.com/MeherBenSalem/modern-building-wands/main/marketing/images/banner.png)
 
-**[Discord](https://discord.gg/TJc3CxR4jK) · [Source and issues](https://github.com/MeherBenSalem/modern-building-wands)**
+**[Docs](https://nightbeam.dev/docs/reconstructed-wands) · [Discord](https://discord.gg/TJc3CxR4jK) · [Source and issues](https://github.com/MeherBenSalem/modern-building-wands)**
 
 **Build the boring parts in one click.** Point a wand at a wall and the next layer appears. Fill a floor, clear a
 cliff face, swap cobblestone for stone bricks, or click twice and get a ring, a box or a whole wall. You see
