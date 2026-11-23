@@ -8,6 +8,7 @@ RE:Constructed Wands for the actively maintained Minecraft targets:
 - Minecraft 1.20.1 (Fabric, Forge)
 - Minecraft 1.21.1 (Fabric, NeoForge)
 - Minecraft 26.2 (Fabric, NeoForge)
+- Minecraft 26.3 (Fabric, NeoForge)
 
 Older releases may not receive backports.
 

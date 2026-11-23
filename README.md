@@ -83,17 +83,39 @@ The recipes changed: wands now have a redstone binding in the middle (no clash w
 
 ## Building
 
-Each Minecraft version is a separate MultiLoader Gradle workspace (`common/`, `fabric/` and `neoforge/`, or `forge/`
-on 1.20.1). Gradle needs the workspace's Java version: 17 for 1.20.1, 21 for 1.21.1, 25 for 26.x.
+Each Minecraft version is a separate MultiLoader Gradle workspace with its own wrapper. These are the only supported
+targets (the NightBeam convention): 8 jars per release, all with the same version.
+
+| Minecraft | Loaders | Java | Folder |
+| --- | --- | --- | --- |
+| 1.20.1 | Forge, Fabric | 17 bytecode (build on 21) | `1.20.1/{common,forge,fabric}` |
+| 1.21.1 | NeoForge, Fabric | 21 | `1.21.1/{common,neoforge,fabric}` |
+| 26.2 | NeoForge, Fabric | 25 | `26.2/{common,neoforge,fabric}` |
+| 26.3 | NeoForge, Fabric | 25 | `26.3/{common,neoforge,fabric}` |
 
 ```bash
-cd 26.3
-./gradlew build          # jars in fabric/build/libs and neoforge/build/libs
-./gradlew :common:test   # shape and config-file unit tests
+./gradlew buildAll             # every workspace, then the 8 loader jars into releases/
+cd 1.20.1 && ./gradlew build   # Gradle on Java 21 (Java 17 toolchain)
+cd 1.21.1 && ./gradlew build   # Java 21
+cd 26.3 && ./gradlew build     # Java 25 (the same for 26.2)
+cd 26.3 && ./gradlew :common:test   # shape and config-file unit tests
 ```
 
-Prebuilt release jars go in `releases/` for the publish workflow. Release notes for a version live in
-`patchnotes/<version>.md`.
+The root build hands the 26.x workspaces `JAVA_HOME_25_X64` (or `-Pjava25Home=<jdk>`) and the others
+`JAVA_HOME_21_X64` (or `-Pjava21Home=<jdk>`); without them each workspace uses the current `JAVA_HOME`.
+Jars land in `<workspace>/<loader>/build/libs/reconstructedwands-<loader>-<minecraft>-<version>.jar`. Every
+workspace's `gradle.properties` carries the same `version=` (`./gradlew checkVersions`; set it with
+`./gradlew syncVersion -PmodVersion=x.y.z`). `python3 scripts/check_targets.py workspaces` checks the targets, the
+shared version and the metadata ranges. Release notes for a version live in `patchnotes/<version>.md`.
+
+## Releasing
+
+CI (`.github/workflows/ci.yml`) builds all 8 jars on every push to `main` that touches the build. Publishing to
+Modrinth and CurseForge is `.github/workflows/publish.yml`, run by hand (`version`, `dry_run`) or by a `v*.*.*` tag;
+it never runs on a plain push. It refuses a second release of the mod on the same day (Africa/Tunis), takes the jars
+from `releases/`, the GitHub Release or a build from source, and fails unless exactly the 8 jars are found. It needs
+the secrets `MODRINTH_TOKEN`, `CURSEFORGE_TOKEN`, `CURSEFORGE_API_KEY` and the variables `MODRINTH_ID`,
+`CURSEFORGE_ID`.
 
 ## Tools
 

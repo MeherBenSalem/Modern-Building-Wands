@@ -41,7 +41,7 @@ debug.log
 # Run folders
 run/
 runs/
-test/
+/test/
 
 # Archives / built artifacts (do not commit jars, except the release jars the publish workflow uploads)
 *.jar
