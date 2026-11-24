@@ -43,8 +43,8 @@ The mod is needed on both the server and the client.
 ## Installation
 
 1. Install Fabric (with Fabric API) or NeoForge (Forge on 1.20.1) for your Minecraft version.
-2. Download the matching jar from [Modrinth](https://modrinth.com/mod/reconstructed-wands/versions) or
-   [CurseForge](https://www.curseforge.com/minecraft/mc-mods/re-constructed-wands) using the table above.
+2. Download the matching jar from [CurseForge](https://www.curseforge.com/minecraft/mc-mods/re-constructed-wands)
+   using the table above.
 3. Put it in your `mods` folder (on the server and on every client).
 
 ## Controls
@@ -111,11 +111,11 @@ shared version and the metadata ranges. Release notes for a version live in `pat
 ## Releasing
 
 CI (`.github/workflows/ci.yml`) builds all 8 jars on every push to `main` that touches the build. Publishing to
-Modrinth and CurseForge is `.github/workflows/publish.yml`, run by hand (`version`, `dry_run`) or by a `v*.*.*` tag;
+CurseForge is `.github/workflows/publish.yml`, run by hand (`version`, `dry_run`) or by a `v*.*.*` tag;
 it never runs on a plain push. It refuses a second release of the mod on the same day (Africa/Tunis), takes the jars
 from `releases/`, the GitHub Release or a build from source, and fails unless exactly the 8 jars are found. It needs
-the secrets `MODRINTH_TOKEN`, `CURSEFORGE_TOKEN`, `CURSEFORGE_API_KEY` and the variables `MODRINTH_ID`,
-`CURSEFORGE_ID`.
+the secrets `CURSEFORGE_TOKEN` (upload token) and `CURSEFORGE_API_KEY` (Core API key) and the variable
+`CURSEFORGE_ID`. NightBeam publishes to CurseForge only; the Modrinth page stays up but gets no new versions.
 
 ## Tools
 
@@ -123,13 +123,12 @@ the secrets `MODRINTH_TOKEN`, `CURSEFORGE_TOKEN`, `CURSEFORGE_API_KEY` and the v
 - [`tools/qa/`](tools/qa): runs dev servers and a real game client under Xvfb. `wand_checks.py` uses every mode in
   survival and checks undo, redo, size, lock, every block source, drops, the deny tag and the reload command.
   `marketing_shots.py` builds and captures the listing screenshots.
-- [`marketing/`](marketing): the CurseForge/Modrinth description, listing images and how to regenerate them.
+- [`marketing/`](marketing): the CurseForge description, listing images and how to regenerate them.
 - [`docs/DESIGN-2.0.md`](docs/DESIGN-2.0.md): the design notes behind 2.0.
 
 ## Links
 
 - [Discord](https://discord.gg/SAmd9fhNhr)
-- [Modrinth](https://modrinth.com/mod/reconstructed-wands/versions)
 - [CurseForge](https://www.curseforge.com/minecraft/mc-mods/re-constructed-wands)
 - [Support the project](https://nightbeam.dev/support)
 
